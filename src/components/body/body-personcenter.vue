@@ -1,11 +1,21 @@
 <template>
   <div class="personcenter">
     <v-topbar></v-topbar>
-    <div class="container">
-      <div class="account">
-        {{username}}
-        <i class="iconfont icon-arrow"></i>
+    <div class="account">
+      <div class="person-icon">
+        <img src="../../common/images/user-icon.jpg" alt="">
       </div>
+      <div class="login-box">
+          <div class="login-signin">登录/注册</div>
+          <div class="login-description">登录后享受更多特权</div>
+      </div>
+    </div>
+    <div class="person-info">
+      <div class="balance"><span class="iconfont  icon-balance"></span>余额</div>
+      <div class="discount"><span class="iconfont  icon-youhui"></span>优惠</div>
+      <div class="integral"><span class="iconfont  icon-jifen"></span>积分</div>
+    </div>
+    <div class="container">
       <ul class="details">
         <li class="details-item"><i class="iconfont icon-shouhuodizhi"></i>收货地址管理<i class="iconfont icon-arrow"></i></li>
          <li class="details-item"><i class="iconfont icon-daijinquan"></i>商家代金券<i class="iconfont icon-arrow"></i></li>
@@ -42,25 +52,66 @@ export default {
 <style scoped>
   .personcenter {
     width: 100%;
+    background: #f4f4f4;
   }
   .container{
-    margin-top: 40px;
      background-color:#fff;
+     margin-top: 20px;
   }
   .account{
-    height: 50px;
-    font-size: 16px;
-    line-height: 45px;
-    padding:0 15px;
-    position: relative;
+   display: flex;
+   height: 110px;
+   background-color: rgb(0,150,255);
+   margin-top: 44px;
   }
-  .account .icon-arrow{
+  .account .person-icon{
+    flex: 0 0 100px;
+    height: 110px;
+  }
+  .account .person-icon img{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin: 20px 10px 0;
+  }
+  .account .login-box{
+    flex: 1;
+    color: #fff;
+    padding-top: 30px;
+  }
+  .account .login-box .login-signin{
     font-size: 20px;
-    display: inline-block;
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    margin-top: -25px;
+    line-height: 24px;
+    margin-bottom: 10px;
+  }
+  .personcenter .person-info{
+    display: flex;
+    background: #fff;
+    text-align: center;
+    border-bottom: 1px solid #d7d7d7;
+  }
+  .personcenter .person-info div{
+    padding: 20px;
+    box-sizing: border-box;
+    border-right: 1px solid #d7d7d7;
+    flex: 1;
+  }
+  .personcenter .person-info div:last-child{
+    border-right: none;
+  }
+  .personcenter .person-info .iconfont{
+    font-size: 30px;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .personcenter .person-info .balance .iconfont{
+    color: #ff9900;
+  }
+  .personcenter .person-info .discount .iconfont{
+    color: #ff5f3e;
+  }
+  .personcenter .person-info .integral .iconfont{
+    color: #6ac20b;
   }
   .personcenter .details{
     border-top: 1px solid #ccc;

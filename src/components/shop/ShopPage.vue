@@ -33,9 +33,7 @@
       <div class="detail-main clearfix">
         <div class="detail-content">
           <div class="shop-name">粥品香坊(大运村)</div>
-          <div class="star-box">
-            <v-star :score="score"></v-star>
-          </div>
+          <v-star :score="score" :size="48"></v-star>
           <div class="title">
             <div class="line"></div>
             <div class="title-text">优惠信息</div>
@@ -300,7 +298,7 @@
     font-size: 32px;
   }
   
-  .star-box {
+  .detail-content .star {
     text-align: center;
     margin: 16px 0 28px 0;
   }

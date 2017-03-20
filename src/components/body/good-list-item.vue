@@ -6,11 +6,11 @@
     <div class="good-list-item-right">
       <div class="main">
         <h2 class="good-name">吉野家（北京站店）<span class="distance">1.2km</span></h2>
-        <div class="score"><span class="sell-number">月售 1378 单</span><span class="send-time">29分钟</span></div>
+        <div class="score"><v-star :score="4.0" :size="24"></v-star><span class="sell-number">月售 1378 单</span><span class="send-time">29分钟</span></div>
         <div class="send-detail"><span class="send-price">起送价￥30</span><span class="send-money">配送费￥10</span></div>
       </div>
       <div class="discount">
-        <p class="discount-item"><img src="../../common/images/decrease_3@2x.png" alt="" class="discount-icon">满30减10；满50减18；满80减28</p>
+        <p class="discount-item"><span class="activity-icon"></span>满30减10；满50减18；满80减28</p>
       </div>
     </div>
   </div>
@@ -75,9 +75,14 @@
     font-size: 12px;
     padding: 0 0px 8px;
   }
-  
+  .good-list-item-right .score .star{
+    display: inline-block;
+    vertical-align: top;
+  }
   .good-list-item-right .score .sell-number {
     padding-left: 10px;
+    vertical-align: top;
+    line-height: 12px;
   }
   
   .good-list-item-right .score .send-time {
@@ -102,11 +107,16 @@
   
   .discount .discount-item {
     font-size: 12px;
-    line-height: 24px;
+    line-height: 14px;
   }
   
-  .discount .discount-item .discount-icon {
-    width: 12px;
+  .discount .discount-item .activity-icon {
+   display: inline-block;
+   width: 14px;
+   height: 14px;
+   vertical-align: top;
+   background: url('../../common/images/decrease_1@2x.png') no-repeat center center;
+   background-size: 12px 12px;
   }
 
 </style>

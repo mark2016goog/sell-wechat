@@ -5,7 +5,7 @@
         粥品香坊（大运村）
       </div>
       <div class="star-sell-num">
-        <v-star :score="4.0"></v-star><span>月售690单</span>
+        <v-star :score="4.0" :size ="star.size"></v-star><span class="sell-count">月售690单</span>
       </div>
       <div class="sell-detail">
         <div class="can-send">
@@ -50,7 +50,11 @@
   export default {
     name: 'seller',
     data() {
-      return {}
+      return {
+        star:{
+          size:'36'
+        }
+      }
     },
     components: {
       'v-star': Star
@@ -72,34 +76,6 @@
     padding: 18px;
     border-bottom: 1px solid rgba(7, 17, 27, 0.1);
   }
-  .seller .star {
-    font-size: 0;
-    display: inline-block;
-    height: 18px;
-  }
-  
-  .seller .star span {
-    width: 18px;
-    height: 18px;
-    margin-right: 8px;
-    display: inline-block;
-    font-size: 12px;
-  }
-  
-  .star span.on {
-    background: url('../../common/images/star24_on@2x.png') no-repeat center center;
-    background-size: 18px 18px;
-  }
-  
-  .star span.half {
-    background: url('../../common/images/star24_half@2x.png') no-repeat center center;
-    background-size: 18px 18px;
-  }
-  
-  .star span.off {
-    background: url('../../common/images/star24_off@2x.png') no-repeat center center;
-    background-size: 18px 18px;
-  }
   
   .seller .seller-name {
     font-size: 14px;
@@ -114,11 +90,16 @@
     border-bottom: 1px solid rgba(7, 17, 27, 0.1);
     padding-bottom: 18px;
   }
-  
-  .seller .star-sell-num span {
+  .star-sell-num .star{
+    display: inline-block;
+    vertical-align: top;
+  }
+  .seller .star-sell-num .sell-count {
+    vertical-align: top;
     display: inline-block;
     line-height: 18px;
     font-size: 10px;
+    margin-left: 20px;
   }
   
   .sell-detail {

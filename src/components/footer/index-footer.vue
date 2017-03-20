@@ -26,7 +26,7 @@
   .index-footer {
     position: fixed;
     border-top: 1px solid #ccc;
-    height: 60px;
+    height: 50px;
     width: 100%;
     bottom: 0;
     left: 0;
@@ -47,13 +47,13 @@
   }
   
   .footer-tab .router-link-active {
-    color: red;
+    color: rgb(0, 150, 255);;
   }
   
   .footer-icon {
     display: block;
-    height: 30px;
-    font-size: 30px;
+    height: 20px;
+    font-size: 20px;
     padding: 7px 0 2px;
   }
   

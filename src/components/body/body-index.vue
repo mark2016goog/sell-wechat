@@ -2,7 +2,8 @@
   <div class="index">
     <header class="index-header">
       <div class="top-banner">
-        <div class="now-address"><i class="iconfont icon-shouhuodizhi"></i>岐山县<i class="iconfont icon-arrow"></i></div>
+        <div class="address-box"><span class="iconfont icon-shouhuodizhi"></span>地址获取中</div>
+        <div class="search-box"><input type="text" placeholder="搜索商家、商品"></div>
       </div>
       <div class="nav-bar">
         <ul class="nav-bar-list">
@@ -98,40 +99,44 @@
   
   .index-header .top-banner {
     width: 100%;
-    height: 150px;
-    background-color: yellow;
+    height: 120px;
+    background-color: rgb(0, 150, 255);
     position: relative;
+    padding: 15px;
+    box-sizing: border-box;
   }
-  
-  .top-banner .now-address {
-    height: 28px;
-    border-radius: 14px;
-    line-height: 28px;
-    text-align: center;
-    background-color: rgba(0, 0, 0, 0.3);
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translate(-50%, 0);
+  .index-header .address-box{
+    font-size: 18px;
+    max-width: 80%;
+    white-space: nowrap;
+    overflow: hidden;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+  .address-box .iconfont {
     font-size: 14px;
     color: #fff;
-    padding: 0 30px;
+    display: inline-block;
+    margin-right: 4px;
   }
   
-  .now-address .iconfont {
+  .index-header .search-box{
+    height: 40px;
+    width: 100%;
+    border-radius: 40px;
+    background: #fff;
+    overflow: hidden;
+    padding: 0 40px;
+    box-sizing: border-box;
+  }
+  .index-header .search-box input{
+    border: none;
+    width: 100%;
+    height: 100%;
+    text-align: center;
     font-size: 14px;
-    position: absolute;
-    line-height: 28px;
+    outline: none;
   }
-  
-  .now-address .icon-shouhuodizhi {
-    left: 10px;
-  }
-  
-  .now-address .icon-arrow {
-    right: 10px;
-  }
-  
   .nav-bar-list {
     display: flex;
     width: 100%;

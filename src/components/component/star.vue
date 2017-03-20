@@ -1,11 +1,11 @@
 <template>
-  <div class="star">
-    <span v-for="item_class in item_classes" :class="item_class"></span>
+  <div class="star" :class="starType">
+    <span v-for="item_class in item_classes" :class="item_class" class="star-item"></span>
   </div>
 </template>
 <script>
   export default{
-    props:['score'],
+    props:['score','size'],
     computed:{
       item_classes(){
         var result = [];
@@ -29,6 +29,9 @@
           i++;
         }
         return result;
+      },
+      starType(){
+        return 'star-'+ this.size;
       }
     }
   }
@@ -38,23 +41,69 @@
   .star {
     font-size: 0;
   }
-  .star span{
-    width: 24px;
-    height: 24px;
+  .star-48 .star-item{
+    width: 20px;
+    height: 20px;
     margin-right: 16px;
     display: inline-block;
     font-size: 12px;
   }
-  .star span.on{
+  .star-48 .star-item:last-child{
+    margin-right: 0;
+  }
+  .star-48 .star-item.on{
     background: url('../../common/images/star24_on@2x.png') no-repeat center center;
-    background-size: 24px 24px;
+    background-size: 20px 20px;
   }
-  .star span.half{
+  .star-48 .star-item.half{
     background: url('../../common/images/star24_half@2x.png') no-repeat center center;
-    background-size: 24px 24px;
+    background-size: 20px 20px;
   }
-  .star span.off{
+  .star-48 .star-item.off{
     background: url('../../common/images/star24_off@2x.png') no-repeat center center;
-    background-size: 24px 24px;
+    background-size: 20px 20px;
+  }
+  .star-36 .star-item{
+    width: 15px;
+    height: 15px;
+    margin-right: 6px;
+    display: inline-block;
+    font-size: 12px;
+  }
+  .star-36 .star-item:last-child{
+    margin-right: 0;
+  }
+  .star-36 .star-item.on{
+    background: url('../../common/images/star24_on@2x.png') no-repeat center center;
+    background-size: 15px 15px;
+  }
+  .star-36 .star-item.half{
+    background: url('../../common/images/star24_half@2x.png') no-repeat center center;
+    background-size: 15px 15px;
+  }
+  .star-36 .star-item.off{
+    background: url('../../common/images/star24_off@2x.png') no-repeat center center;
+    background-size: 15px 15px;
+  }
+  .star-24 .star-item{
+    width: 10px;
+    height: 10px;
+    margin-right: 3px;
+    display: inline-block;
+  }
+  .star-24 .star-item:last-child{
+    margin-right: 0;
+  }
+  .star-24 .star-item.on{
+    background: url('../../common/images/star24_on@2x.png') no-repeat center center;
+    background-size: 10px 10px;
+  }
+  .star-24 .star-item.half{
+    background: url('../../common/images/star24_half@2x.png') no-repeat center center;
+    background-size: 10px 10px;
+  }
+  .star-24 .star-item.off{
+    background: url('../../common/images/star24_off@2x.png') no-repeat center center;
+    background-size: 10px 10px;
   }
 </style>

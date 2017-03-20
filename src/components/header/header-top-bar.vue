@@ -11,7 +11,7 @@ export default {
   data () {
     return {
       title: '我的',
-      'is_arrow_show': false
+      'is_arrow_show': true
     };
   }
 };
@@ -23,25 +23,23 @@ export default {
         position: fixed;
         top: 0;
         left: 0;
-        height: 40px;
+        height: 45px;
         width: 100%;
-        background-color: orange;
+        background-color: rgb(0, 150, 255);
         z-index: 1;
-        line-height: 40px;
+        line-height: 45px;
         font-size: 20px;
         color: #fff;
         text-align: center;
+        box-sizing: border-box;
     }
     .icon-arrow{
         position: absolute;
         left: 0px;
-        top: 50%;
-        margin-top: -20px;
         display: inline-block;
         width: 30px;
         font-size: 24px;
         color: #fff;
-        line-height: 40px;
         transform: rotate(180deg);
     }
 </style>

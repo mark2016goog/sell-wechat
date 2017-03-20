@@ -7,7 +7,7 @@
       <div class="top-content">
         <div class="user-date-box"><span class="user-name">让风消亡</span><span class="evaluate-date">2017-03-6 21:45</span></div>
         <div class="star-time-box">
-          <v-star score="4.0"></v-star><span class="spend-time">80分钟送达</span></div>
+          <v-star score="4.0" :size="24"></v-star><span class="spend-time">80分钟送达</span></div>
       </div>
       <div class="center-content">
         油条凉了，而且没有酱。75分钟才到。很慢。送餐员态度不错，但毕竟好晚了啊。
@@ -61,7 +61,6 @@
   
   .evaluateitem .right-content .top-content {
     font-size: 10px;
-    line-height: 12px;
     color: rgb(147, 153, 159);
   }
   
@@ -74,40 +73,20 @@
     float: right;
   }
   .evaluateitem .right-content .top-content .star-time-box{
-    height: 12px;
-    line-height: 12px;
     margin-top: 4px;
+    font-size: 0;
     margin-bottom: 6px;
+  }
+  .evaluateitem .right-content .top-content .star-time-box .star{
+    display: inline-block;
+    vertical-align: top;
   }
   .evaluateitem .right-content .top-content .spend-time{
     font-size:10px;
-    line-height: 12px;
-    height: 12px;
+    vertical-align: top;
     color: rgb(147, 153, 159);
     font-weight: 200;
-  }
-  .evaluateitem .right-content .top-content .star{
-    display:inline-block;
-    vertical-align:top;
-  }
-  .evaluateitem .right-content .top-content .star span{
-    width: 12px;
-    height: 12px;
-    margin-right: 4px;
-    display: inline-block;
-    font-size: 12px;
-  }
-  .evaluateitem .right-content .top-content .star span.on{
-    background: url('../../common/images/star24_on@2x.png') no-repeat center center;
-    background-size: 12px 12px;
-  }
-  .evaluateitem .right-content .top-content .star span.half{
-    background: url('../../common/images/star24_half@2x.png') no-repeat center center;
-    background-size: 12px 12px;
-  }
-  .evaluateitem .right-content .top-content .star span.off{
-    background: url('../../common/images/star24_off@2x.png') no-repeat center center;
-    background-size: 12px 12px;
+    line-height: 12px;
   }
   .evaluateitem .center-content{
     font-size: 12px;
