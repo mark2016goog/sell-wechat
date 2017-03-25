@@ -11,6 +11,7 @@ import Evaluate from '@/components/shop/evaluate'
 Vue.use(Router)
 
 export default new Router({
+  model:history,
   routes: [{
       path: '/index',
       component: Index

@@ -5,7 +5,7 @@
     </div>
     <div class="good-list-item-right">
       <div class="main">
-        <h2 class="good-name">吉野家（北京站店）<span class="distance">1.2km</span></h2>
+        <h2 class="good-name">吉野家（北京站店）吉野家（北京站店）吉野家（北京站店）<span class="distance">1.2km</span></h2>
         <div class="score"><v-star :score="4.0" :size="24"></v-star><span class="sell-number">月售 1378 单</span><span class="send-time">29分钟</span></div>
         <div class="send-detail"><span class="send-price">起送价￥30</span><span class="send-money">配送费￥10</span></div>
       </div>
@@ -43,6 +43,8 @@
     width: 100%;
     background-color: #fff;
     display: flex;
+    border-bottom: 1px solid #d7d7d7;
+    padding-bottom: 10px;
   }
   .good-list-item .good-list-item-left {
     margin-top: 8px;
@@ -59,16 +61,24 @@
     border-bottom: 1px solid #ccc;
     padding-bottom: 10px;
     margin-bottom: 6px;
+    position: relative;
   }
   
   .good-list-item .good-list-item-right .good-name {
     font-size: 16px;
     line-height: 32px;
+    height: 32px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 200px;
   }
   
   .good-list-item .good-list-item-right .good-name .distance {
     font-size: 12px;
-    float: right;
+    position: absolute;
+    right: 10px;
+    top: 0px;
   }
   
   .good-list-item-right .score {

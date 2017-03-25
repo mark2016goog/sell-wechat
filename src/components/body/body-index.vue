@@ -166,11 +166,6 @@
     width: 100%;
     background-color: #ddd;
   }
-  
-  .content .good-list-item {
-    margin-bottom: 10px;
-  }
-  
   .content .more {
     text-align: center;
     height: 90px;

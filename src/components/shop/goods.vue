@@ -17,9 +17,10 @@
                 <div class="item-description">
                   <h3 class="item-title">{{food.name}}</h3>
                   <div class="item-name">{{food.description}}</div>
-                  <div class="sell-number"><span class="">月售{{food.sellCount}}份</span><span class="good-evaluation-rate
-">好评率{{food.rating}}%</span></div>
-                  <div class="price"><span class="now"><i>￥</i>{{food.price}}</span><span class="old" v-show="food.oldPrice"><i>￥</i>{{food.oldPrice}}</span></div>
+                  <div class="sell-number"><span class="">月售{{food.sellCount}}份</span><span class="good-evaluation-rate">好评率{{food.rating}}%</span></div>
+                  <div class="price"><span class="now"><i>￥</i>{{food.price}}</span><span class="old" v-show="food.oldPrice"><i>￥</i>{{food.oldPrice}}</span>
+                  <div class="cartcontrol-wrap" style="display:inline-block;vertical-align:top;float:right;"><v-cartcontrol :food="food"></v-cartcontrol></div>
+                  </div>
                 </div>
               </li>
             </ul>
@@ -27,41 +28,45 @@
         </ul>
       </div>
     </div>
-    <div class="goods-shopcart">
-      <div class="shopcart-totalprice"><span class="iconfont icon-shopcart"></span>￥{{total_price}}</div>
-      <div class="shopcart-send-money"> 另需配送费￥4元</div>
-      <div class="littleprice" :class="{cansend:total_price >= 20}">{{littleprice}}</div>
-    </div>
+    <v-shopcart :minPrice="30" :deliveryPrice="10" :selectFoods = "selectFoods"></v-shopcart>
   </div>
 </template>
 <script>
-  import GoodsListItem from '../component/goods-item-list'
   import BScroll from 'better-scroll'
+  import shopcart from '../shop/shopcart'
+  import cartcontrol from '../shop/cartcontrol'
   import axios from 'axios'
   export default {
     name: 'goods',
     data() {
       return {
-        total_price: 30,
         goods: [],
-        listHeight:[],
-        scrollY:0,
+        listHeight: [],
+        scrollY: 0,
       }
     },
     computed: {
-      littleprice() {
-        return this.total_price > 20 ? '去结算' : '￥20起送';
-      },
-      currentIndex(){
-        for(let i = 0;i < this.listHeight.length;i++){
+      currentIndex() {
+        for (let i = 0; i < this.listHeight.length; i++) {
           let height1 = this.listHeight[i];
-          let height2 = this.listHeight[i+1];
+          let height2 = this.listHeight[i + 1];
 
-          if(!height2 || (this.scrollY >= height1 && this.scrollY < height2)){
+          if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
             return i;
           }
         }
         return 0;
+      },
+      selectFoods() {
+        let foods = [];
+        this.goods.forEach((good) => {
+          good.foods.forEach((food) => {
+            if (food.count) {
+              foods.push(food);
+            }
+          });
+        });
+        return foods;
       }
     },
     methods: {
@@ -97,13 +102,14 @@
       }
     },
     components: {
-      'v-goodlistitem': GoodsListItem
+      'v-shopcart': shopcart,
+      'v-cartcontrol':cartcontrol
     },
     created() {
       let self = this;
       axios.get('../../../static/data.json').then(function (response) {
         self.goods = response.data.goods;
-        self.$nextTick(function() {
+        self.$nextTick(function () {
           self._initScroll();
           self._calculateHeight();
         });
@@ -123,13 +129,13 @@
     width: 100%;
     overflow: hidden;
   }
-  
+
   .goods-left-side {
     flex: 0 0 80px;
     width: 80px;
     background-color: #f3f5f7;
   }
-  
+
   .goods-left-side-list-item {
     display: table;
     height: 54px;
@@ -139,11 +145,11 @@
     line-height: 14px;
     border-bottom: 1px solid rgba(7, 17, 27, 0.1);
   }
-  
+
   .goods-left-side-list-item.on {
     background: #fff;
   }
-  
+
   .goods-left-side-list-item .icon {
     display: inline-block;
     height: 14px;
@@ -153,7 +159,7 @@
     vertical-align: top;
     margin-right: 2px;
   }
-  
+
   .goods-left-side-list-item .text {
     display: table-cell;
     width: 56px;
@@ -161,82 +167,101 @@
     font-weight: 200;
     vertical-align: middle;
   }
-  
+
   .goods-right-content {
     flex: 1;
   }
-  
-  .goods-shopcart {
-    display: flex;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 46px;
-    line-height: 46px;
-    background-color: #141d27;
-    color: rgba(255, 255, 255, 0.4);
-  }
-  
-  .goods-shopcart .icon-shopcart {
-    position: absolute;
-    top: -10px;
-    left: 12px;
-    display: inline-block;
-    width: 50px;
-    height: 50px;
-    text-align: center;
-    border-radius: 50%;
-    background-color: #141d27;
-  }
-  
-  .goods-shopcart .icon-shopcart:before {
-    display: inline-block;
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    border-radius: 50%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(255, 255, 255, 0.2);
-    font-size: 25px;
-  }
-  
-  .goods-shopcart .shopcart-totalprice {
-    flex: 0 0 115px;
-    width: 115px;
-    padding-left: 60px;
-    text-align: center;
-    font-size: 16px;
-    color: rgba(255, 255, 255, 0.4);
-    font-weight: 700;
-    box-sizing: border-box;
-  }
-  
-  .goods-shopcart .shopcart-send-money {
-    flex: 1;
-    font-size: 10px;
-    padding-left: 12px;
-    margin-left: 12px;
-    line-height: 22px;
-    height: 22px;
-    margin-top: 12px;
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
-  }
-  
-  .goods-shopcart .littleprice {
-    flex: 0 0 110px;
-    width: 110px;
+
+  .goods-item-list-title {
+    height: 26px;
+    line-height: 26px;
+    background-color: #f3f5f7;
+    border-left: 2px solid #d9dde1;
     font-size: 12px;
-    font-weight: 700;
-    background: rgba(255, 255, 255, 0.2);
-    text-align: center;
+    padding-left: 14px;
   }
-  
-  .goods-shopcart .cansend {
-    background: #00b43c;
-    color: #fff;
+
+  .goods-item-list-content {
+    padding: 0 18px;
+  }
+
+  .goods-item-list-content li {
+    box-sizing: border-box;
+    display: flex;
+    margin: 18px 0;
+    padding-bottom: 18px;
+    border-bottom: 1px solid rgba(7, 17, 27, 0.1);
+  }
+
+  .goods-item-list-content li:first-child {
+    border-bottom: none;
+  }
+
+  .goods-item-list-content .item-icon {
+    flex: 0 0 60px;
+    width: 60px;
+    overflow: hidden;
+    height: 60px;
+    border-radius: 4px;
+    margin-right: 10px;
+  }
+
+  .goods-item-list-content .item-icon img {
+    height: 60px;
+    width: 60px;
+  }
+
+  .goods-item-list-content .item-description {
+    flex: 1;
+  }
+
+  .goods-item-list-content .item-description .item-title {
+    margin-top: 2px;
+    font-size: 14px;
+    line-height: 14px;
+    color: rgb(7, 17, 27);
+  }
+
+  .goods-item-list-content .item-description .item-name {
+    font-size: 10px;
+    color: rgb(147, 153, 159);
+    line-height: 10px;
+    margin: 8px 0;
+  }
+
+  .goods-item-list-content .item-description .price {
+    font-size: 10px;
+    color: rgb(240, 20, 20);
+    font-weight: normal;
+    line-height: 24px;
+  }
+
+  .goods-item-list-content .item-description .price .now {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 700;
+    vertical-align: middle;
+  }
+
+  .goods-item-list-content .item-description .price .now i {
+    font-size: 10px;
+    font-weight: normal;
+  }
+
+  .goods-item-list-content .item-description .price .old {
+    display: inline-block;
+    font-size: 10px;
+    color: rgb(147, 153, 159);
+    font-weight: 700;
+    text-decoration: line-through;
+  }
+
+  .goods-item-list-content .item-description .sell-number {
+    font-size: 10px;
+    color: rgb(147, 153, 159);
+    margin-top: 8px;
+    line-height: 10px;
+    margin-bottom: 4px;
   }
 
 </style>
