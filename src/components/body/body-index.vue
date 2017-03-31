@@ -1,59 +1,63 @@
 <template>
   <div class="index">
-    <header class="index-header">
-      <div class="top-banner">
-        <div class="address-box"><span class="iconfont icon-shouhuodizhi"></span>地址获取中</div>
-        <div class="search-box"><input type="text" placeholder="搜索商家、商品"></div>
-      </div>
-      <div class="nav-bar">
-        <ul class="nav-bar-list">
-          <li class="nav-bar-list-item">
-            <img src="../../common/images/meishi.png" alt="美食图片" class="item-pic"> 美食
-          </li>
-          <li class="nav-bar-list-item">
-            <img src="../../common/images/meishi.png" alt="美食图片" class="item-pic"> 超市
-          </li>
-          <li class="nav-bar-list-item">
-            <img src="../../common/images/meishi.png" alt="美食图片" class="item-pic"> 鲜果购
-          </li>
-          <li class="nav-bar-list-item">
-            <img src="../../common/images/meishi.png" alt="美食图片" class="item-pic"> 甜点饮品
-          </li>
-          <li class="nav-bar-list-item">
-            <img src="../../common/images/meishi.png" alt="美食图片" class="item-pic"> 正餐优选
-          </li>
-          <li class="nav-bar-list-item">
-            <img src="../../common/images/meishi.png" alt="美食图片" class="item-pic"> 小迪专送
-          </li>
-          <li class="nav-bar-list-item">
-            <img src="../../common/images/meishi.png" alt="美食图片" class="item-pic"> 能量西餐
-          </li>
-          <li class="nav-bar-list-item">
-            <img src="../../common/images/meishi.png" alt="美食图片" class="item-pic"> 精选小吃
-          </li>
-        </ul>
-      </div>
-    </header>
-    <div class="content">
-      <h2 class="content-title">
-        <p>附近商家</p>
-      </h2>
-      <good-list-item @go="goShopPage"></good-list-item>
-      <good-list-item></good-list-item>
-      <good-list-item></good-list-item>
-      <good-list-item></good-list-item>
-      <good-list-item></good-list-item>
-      <good-list-item></good-list-item>
-      <good-list-item></good-list-item>
-      <good-list-item></good-list-item>
-      <good-list-item></good-list-item>
-      <good-list-item></good-list-item>
-      <good-list-item></good-list-item>
-      <good-list-item></good-list-item>
-      <good-list-item></good-list-item>
-      <good-list-item></good-list-item>
-      <div class="more">
-        更多商家接入中，敬请期待！
+    <div class="index-content">
+      <div>
+        <header class="index-header">
+          <div class="top-banner">
+            <div class="address-box"><span class="iconfont icon-shouhuodizhi"></span>地址获取中</div>
+            <div class="search-box"><input type="text" placeholder="搜索商家、商品"></div>
+          </div>
+          <div class="nav-bar">
+            <ul class="nav-bar-list">
+              <li class="nav-bar-list-item">
+                <img src="../../common/images/meishi.png" alt="美食图片" class="item-pic"> 美食
+              </li>
+              <li class="nav-bar-list-item">
+                <img src="../../common/images/meishi.png" alt="美食图片" class="item-pic"> 超市
+              </li>
+              <li class="nav-bar-list-item">
+                <img src="../../common/images/meishi.png" alt="美食图片" class="item-pic"> 鲜果购
+              </li>
+              <li class="nav-bar-list-item">
+                <img src="../../common/images/meishi.png" alt="美食图片" class="item-pic"> 甜点饮品
+              </li>
+              <li class="nav-bar-list-item">
+                <img src="../../common/images/meishi.png" alt="美食图片" class="item-pic"> 正餐优选
+              </li>
+              <li class="nav-bar-list-item">
+                <img src="../../common/images/meishi.png" alt="美食图片" class="item-pic"> 小迪专送
+              </li>
+              <li class="nav-bar-list-item">
+                <img src="../../common/images/meishi.png" alt="美食图片" class="item-pic"> 能量西餐
+              </li>
+              <li class="nav-bar-list-item">
+                <img src="../../common/images/meishi.png" alt="美食图片" class="item-pic"> 精选小吃
+              </li>
+            </ul>
+          </div>
+        </header>
+        <div class="content">
+          <h2 class="content-title">
+            <p>附近商家</p>
+          </h2>
+          <good-list-item @go="goShopPage"></good-list-item>
+          <good-list-item></good-list-item>
+          <good-list-item></good-list-item>
+          <good-list-item></good-list-item>
+          <good-list-item></good-list-item>
+          <good-list-item></good-list-item>
+          <good-list-item></good-list-item>
+          <good-list-item></good-list-item>
+          <good-list-item></good-list-item>
+          <good-list-item></good-list-item>
+          <good-list-item></good-list-item>
+          <good-list-item></good-list-item>
+          <good-list-item></good-list-item>
+          <good-list-item></good-list-item>
+          <div class="more">
+            更多商家接入中，敬请期待！
+          </div>
+        </div>
       </div>
     </div>
     <v-footer></v-footer>
@@ -64,6 +68,7 @@
   import router from '@/router'
   import goodListItem from './good-list-item';
   import Footer from '../footer/index-footer';
+  import BScroll from 'better-scroll'
 
   export default {
     name: 'index',
@@ -80,6 +85,14 @@
       goShopPage: function () {
         router.push('/shoppage/goods');
       }
+    },
+    created: function () {
+      var self = this;
+      self.$nextTick(function () {
+        new BScroll(document.querySelector('.index-content'), {
+          click: true,
+        })
+      })
     }
   };
 
@@ -89,14 +102,18 @@
 <style scoped>
   .index {
     width: 100%;
-    background: springgreen;
+    height: 100%;
+    overflow: hidden;
   }
-  
+  .index-content{
+    height: 100%;
+    overflow: hidden;
+  }
   .index-header {
     width: 100%;
     border-bottom: 1px solid #ddd;
   }
-  
+
   .index-header .top-banner {
     width: 100%;
     height: 120px;
@@ -105,7 +122,8 @@
     padding: 15px;
     box-sizing: border-box;
   }
-  .index-header .address-box{
+
+  .index-header .address-box {
     font-size: 18px;
     max-width: 80%;
     white-space: nowrap;
@@ -113,14 +131,15 @@
     color: #fff;
     margin-bottom: 20px;
   }
+
   .address-box .iconfont {
     font-size: 14px;
     color: #fff;
     display: inline-block;
     margin-right: 4px;
   }
-  
-  .index-header .search-box{
+
+  .index-header .search-box {
     height: 40px;
     width: 100%;
     border-radius: 40px;
@@ -129,7 +148,8 @@
     padding: 0 40px;
     box-sizing: border-box;
   }
-  .index-header .search-box input{
+
+  .index-header .search-box input {
     border: none;
     width: 100%;
     height: 100%;
@@ -137,6 +157,7 @@
     font-size: 14px;
     outline: none;
   }
+
   .nav-bar-list {
     display: flex;
     width: 100%;
@@ -146,7 +167,7 @@
     align-content: flex-start;
     font-size: 12px;
   }
-  
+
   .nav-bar-list .nav-bar-list-item {
     box-sizing: border-box;
     flex: 0 0 25%;
@@ -154,18 +175,19 @@
     overflow: hidden;
     text-align: center;
   }
-  
+
   .nav-bar-list-item .item-pic {
     display: block;
     width: 40px;
-    height:40px;
+    height: 40px;
     margin: 10px auto;
   }
-  
+
   .content {
     width: 100%;
     background-color: #ddd;
   }
+
   .content .more {
     text-align: center;
     height: 90px;
@@ -173,7 +195,7 @@
     margin-top: -10px;
     padding-top: 20px;
   }
-  
+
   .content .content-title {
     height: 20px;
     line-height: 20px;
@@ -182,7 +204,7 @@
     background-color: #ddd;
     padding: 5px 0;
   }
-  
+
   .content .content-title p {
     padding-left: 20px;
     border-left: 4px solid #fdad3a;

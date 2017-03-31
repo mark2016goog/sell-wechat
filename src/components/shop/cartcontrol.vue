@@ -2,11 +2,10 @@
   <div class="cartcontrol">
     <transition name="move">
       <div class="cart-decrease" v-show="food.count" @click.stop.prevent="decreaseCart">
-        <span class="iconfont icon-jian"></span>
-     </div>
+        <span class="iconfont icon-jian inner"></span>
+      </div>
     </transition>
-    
-    <div class="cart-count" v-show="food.count" >{{food.count}}</div>
+    <div class="cart-count" v-show="food.count">{{food.count}}</div>
     <div class="cart-add" @click.stop.prevent="addCart">
       <span class="iconfont icon-jia"></span>
     </div>
@@ -14,22 +13,22 @@
 </template>
 <script>
   import Vue from 'vue';
-  export default{
-    props:{
-      food:{
-        type:Object
+  export default {
+    props: {
+      food: {
+        type: Object
       }
     },
-    methods:{
-      decreaseCart:function(){
-       if (!event._constructed) {
+    methods: {
+      decreaseCart: function () {
+        if (!event._constructed) {
           return;
         }
         if (this.food.count) {
           this.food.count--;
         }
       },
-      addCart:function(){
+      addCart: function () {
         if (!this.food.count) {
           Vue.set(this.food, 'count', 1);
         } else {
@@ -38,26 +37,34 @@
       }
     }
   }
+
 </script>
 
 <style>
-  .cartcontrol{
+  .cartcontrol {
     font-size: 0;
     height: 24px;
   }
+
   .cart-decrease {
     display: inline-block;
     line-height: 24px;
     vertical-align: top;
     transform: translate3d(0, 0, 0);
   }
- .cartcontrol .iconfont{
+
+  .cartcontrol .iconfont {
     color: rgb(0, 160, 200);
     font-size: 23px;
     line-height: 24px;
-    
   }
-  .cart-count{
+
+  .inner {
+    transition: all 0.4s linear;
+    transform: rotate(0);
+  }
+
+  .cart-count {
     font-size: 10px;
     color: rgb(147, 153, 159);
     display: inline-block;
@@ -66,19 +73,28 @@
     line-height: 24px;
     vertical-align: top;
   }
-  .cart-add{
+
+  .cart-add {
     vertical-align: top;
     display: inline-block;
     color: rgb(0, 160, 200);
     line-height: 24px;
   }
-  .move-enter-active,.move-leave-active{
+
+  .move-enter-active,
+  .move-leave-active {
     transition: all 0.5s;
   }
-  .move-enter,.move-leave-active{
-    transform: translate3d(22px,0,0);
+
+  .move-enter,
+  .move-leave-active {
+    opacity: 0;
+    transform: translate3d(22px, 0, 0);
   }
-  .move-enter .iconfont,.move-leave-active .iconfont{
+
+  .move-enter .inner,
+  .move-leave-active .inner {
     transform: rotate(180deg);
   }
+
 </style>

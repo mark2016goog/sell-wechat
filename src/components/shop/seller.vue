@@ -1,6 +1,7 @@
 <template>
   <div class="seller">
-    <div class="seller-top">
+    <div class="seller-box">
+      <div class="seller-top">
       <div class="seller-name">
         粥品香坊（大运村）
       </div>
@@ -43,10 +44,12 @@
         <li>该商家支持开发票，请在下单时写好发票抬头</li>
       </ul>
     </div>
+    </div>
   </div>
 </template>
 <script>
   import Star from '../component/star'
+  import BScroll from 'better-scroll'
   export default {
     name: 'seller',
     data() {
@@ -58,6 +61,14 @@
     },
     components: {
       'v-star': Star
+    },
+    created:function(){
+      this.$nextTick(function(){
+         new BScroll(document.querySelector('.seller'), {
+          click: true,
+          bounce:false
+        });
+      })
     }
   }
 
@@ -69,7 +80,7 @@
     top: 0;
     bottom: 0;
     background:#f3f5f7;
-    overflow: auto;
+    overflow: hidden;
   }
   .seller .seller-top{
     background-color: #fff;
