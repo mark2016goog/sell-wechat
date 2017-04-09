@@ -12,6 +12,9 @@ import Loginphonenumber from '../components/user/loginphonenumber'
 import Loginpassword from '../components/user/loginpassword'
 import Accountsetting from '../components/user/accountsetting'
 import Setpassword from '../components/user/setpassword'
+import Comfirmorder from '../components/body/comfirmorder'
+import Sendaddress from '../components/body/sendaddress'
+import Addaddress from '../components/body/addaddress'
 
 Vue.use(Router)
 
@@ -67,6 +70,18 @@ export default new Router({
         component: Setpassword
       },
       ]
+    },
+    {
+      path:'/comfirmorder',
+      component:Comfirmorder
+    },
+    {
+      path:'/sendaddress',
+      component:Sendaddress
+    },
+    {
+      path:'/addaddress',
+      component:Addaddress
     }
   ]
 })

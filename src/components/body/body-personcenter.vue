@@ -17,7 +17,7 @@
     </div>
     <div class="container">
       <ul class="details">
-        <li class="details-item"><i class="iconfont icon-shouhuodizhi"></i>收货地址管理<i class="iconfont icon-arrow"></i></li>
+        <li class="details-item"><i class="iconfont icon-dizhi"></i>收货地址管理<i class="iconfont icon-arrow"></i></li>
          <li class="details-item"><i class="iconfont icon-daijinquan"></i>商家代金券<i class="iconfont icon-arrow"></i></li>
           <li class="details-item"><i class="iconfont icon-yijianfankui"></i>意见反馈<i class="iconfont icon-arrow"></i></li>
            <li class="details-item"><i class="iconfont icon-changjianwenti"></i>常见问题<i class="iconfont icon-arrow"></i></li>

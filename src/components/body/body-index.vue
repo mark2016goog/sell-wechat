@@ -4,7 +4,7 @@
       <div>
         <header class="index-header">
           <div class="top-banner">
-            <div class="address-box"><span class="iconfont icon-shouhuodizhi"></span>{{address}}</div>
+            <div class="address-box"><span class="iconfont icon-dizhi"></span>{{address}}</div>
             <div class="search-box"><input type="text" placeholder="搜索商家、商品"></div>
           </div>
           <div class="nav-bar">

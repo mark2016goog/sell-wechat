@@ -75,7 +75,8 @@
       settlement: function (e) {
         if (this.total_price >= this.minPrice) {
           e.stopPropagation();
-          router.push('/user/loginphonenumber');
+          // router.push('/user/loginphonenumber');
+          router.push('/comfirmorder');
         }
       }
     },
