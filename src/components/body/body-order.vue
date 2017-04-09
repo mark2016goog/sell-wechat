@@ -1,6 +1,6 @@
 <template>
   <div class="order">
-    <v-topbar></v-topbar>
+    <v-topbar :title="topbar.title"></v-topbar>
     <div class="order-content">
       <order-list-item></order-list-item>
       <order-list-item></order-list-item>
@@ -17,7 +17,9 @@ export default {
   name: 'order',
   data () {
     return {
-      title: '订单'
+      topbar:{
+        title: '订单'
+      }
     };
   },
   components: {

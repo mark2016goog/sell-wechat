@@ -1,11 +1,11 @@
 <template>
   <div class="personcenter">
-    <v-topbar></v-topbar>
+    <v-topbar :title = "topbar.title"></v-topbar>
     <div class="account">
       <div class="person-icon">
         <img src="../../common/images/user-icon.jpg" alt="">
       </div>
-      <div class="login-box">
+      <div class="login-box" @click="login">
           <div class="login-signin">登录/注册</div>
           <div class="login-description">登录后享受更多特权</div>
       </div>
@@ -23,7 +23,6 @@
            <li class="details-item"><i class="iconfont icon-changjianwenti"></i>常见问题<i class="iconfont icon-arrow"></i></li>
             <li class="details-item"><i class="iconfont icon-kefudianhua"></i>客服电话<i class="iconfont icon-arrow"></i></li>   
       </ul>
-      <div class="quit-btn">退出登录</div>
     </div>
     <v-footer></v-footer>
   </div>
@@ -32,24 +31,35 @@
 <script>
 import HeaderTopBar from '../header/header-top-bar';
 import Footer from '../footer/index-footer';
-
+import router from '../../router'
 export default {
   name: 'personcenter',
   data () {
     return {
-      title: '个人中心',
+      topbar:{
+        title:'个人中心',
+      },
       username: 'rzn937789897'
     };
+  },
+  methods:{
+    login:function(){
+      // router.push('/user/loginphonenumber');
+      router.push('/user/accountsetting');
+    }
   },
   components: {
     'v-topbar': HeaderTopBar,
     'v-footer':Footer
+  },
+  created:function(){
+    
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
   .personcenter {
     width: 100%;
     background: #f4f4f4;
@@ -62,7 +72,7 @@ export default {
    display: flex;
    height: 110px;
    background-color: rgb(0,150,255);
-   margin-top: 44px;
+   padding-top: 45px;
   }
   .account .person-icon{
     flex: 0 0 100px;
@@ -89,6 +99,7 @@ export default {
     background: #fff;
     text-align: center;
     border-bottom: 1px solid #d7d7d7;
+    font-size: 12px;
   }
   .personcenter .person-info div{
     padding: 20px;
@@ -100,7 +111,7 @@ export default {
     border-right: none;
   }
   .personcenter .person-info .iconfont{
-    font-size: 30px;
+    font-size: 24px;
     margin-bottom: 10px;
     display: block;
   }
@@ -142,13 +153,7 @@ export default {
     top: 50%;
     margin-top: -20px;
   }
-  .personcenter .quit-btn{
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    border: 1px solid orangered;
-    color: orangered;
-    border-radius: 3px;
-    margin: 20px 10px 0;
+  .login-description{
+    font-size: 14px;
   }
 </style>

@@ -1,9 +1,9 @@
 <template>
   <div class="shopcart">
     <div class="shopcart-content" @click="toggleList">
-      <div class="shopcart-totalprice" :class="{'highlight-price':total_count>0}" ><span class="iconfont icon-shopcart" :class="{'highlight-cart':total_count>0}"></span>￥{{total_price}}</div>
+      <div class="shopcart-totalprice" :class="{'highlight-price':total_count>0}"><span class="iconfont icon-shopcart" :class="{'highlight-cart':total_count>0}"><i class="food-total-count" v-if="total_count">{{total_count}}</i></span>￥{{total_price}}</div>
       <div class="shopcart-send-money"> 另需配送费{{deliveryPrice}}元</div>
-      <div class="littleprice" :class="{cansend:total_price >= minPrice}">{{pay_description}}</div>
+      <div class="littleprice" :class="{cansend:total_price>= minPrice}" @click="settlement">{{pay_description}}</div>
     </div>
     <transition name="fold">
       <div class="shopcart-list" v-show="listShow">
@@ -32,6 +32,7 @@
 <script>
   import BScroll from 'better-scroll';
   import cartcontrol from '../shop/cartcontrol'
+  import router from '../../router'
 
   export default {
     name: 'shopcart',
@@ -53,8 +54,8 @@
         default: 0
       }
     },
-    components:{
-      'v-cartcontrol':cartcontrol
+    components: {
+      'v-cartcontrol': cartcontrol
     },
     methods: {
       empty: function () {
@@ -68,8 +69,14 @@
         }
         this.fold = !this.fold;
       },
-      hideList:function(){
+      hideList: function () {
         this.fold = true;
+      },
+      settlement: function (e) {
+        if (this.total_price >= this.minPrice) {
+          e.stopPropagation();
+          router.push('/user/loginphonenumber');
+        }
       }
     },
     computed: {
@@ -121,13 +128,26 @@
 
 </script>
 <style>
-  .shopcart{
+  .shopcart {
     position: fixed;
     bottom: 0;
     width: 100%;
     height: 46px;
     line-height: 46px;
     z-index: 50;
+  }
+
+  .food-total-count {
+    background: #f31515;
+    display: inline-block;
+    width: 20px;
+    height: 12px;
+    position: absolute;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 8px;
+    line-height: 12px;
+    font-weight: normal;
   }
 
   .shopcart .shopcart-content {
@@ -149,7 +169,7 @@
     border-radius: 50%;
     background-color: #141d27;
   }
- 
+
   .shopcart .icon-shopcart:before {
     display: inline-block;
     position: absolute;
@@ -163,12 +183,15 @@
     background: rgba(255, 255, 255, 0.2);
     font-size: 25px;
   }
-   .shopcart .highlight-cart{
+
+  .shopcart .highlight-cart {
     color: #fff;
   }
-  .shopcart .highlight-cart:before{
-    background: rgb(0,160,200);
+
+  .shopcart .highlight-cart:before {
+    background: rgb(0, 160, 200);
   }
+
   .shopcart .shopcart-totalprice {
     flex: 0 0 115px;
     width: 115px;
@@ -179,9 +202,11 @@
     font-weight: 700;
     box-sizing: border-box;
   }
-  .shopcart .highlight-price{
+
+  .shopcart .highlight-price {
     color: #fff;
   }
+
   .shopcart .shopcart-send-money {
     flex: 1;
     font-size: 10px;
@@ -262,9 +287,11 @@
     flex: 0 0 170px;
     font-size: 14px;
   }
-  .shopcart-list .shopcart-list-box .cartcontrol-box{
+
+  .shopcart-list .shopcart-list-box .cartcontrol-box {
     flex: 0 0 75px;
   }
+
   .shopcart-list .shopcart-list-item .price {
     flex: 1;
     color: rgb(240, 20, 20);
@@ -274,11 +301,13 @@
   .shopcart-list .shopcart-list-item .price .price-icon {
     font-size: 10px;
   }
+
   .cartcontrol-box {
     position: absolute;
     bottom: 12px;
     right: 0;
   }
+
   .mask {
     position: fixed;
     top: 0;
@@ -289,11 +318,16 @@
     opacity: 1;
     background: rgba(7, 17, 27, 0.6);
   }
-  .fade-enter-active,.fade-leave-active{
+
+  .fade-enter-active,
+  .fade-leave-active {
     transition: all 0.5s;
   }
-  .fade-enter,.fade-leave-active{
+
+  .fade-enter,
+  .fade-leave-active {
     opacity: 0;
     background: rgba(7, 17, 27, 0)
   }
+
 </style>

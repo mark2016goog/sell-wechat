@@ -4,7 +4,7 @@
       <div>
         <header class="index-header">
           <div class="top-banner">
-            <div class="address-box"><span class="iconfont icon-shouhuodizhi"></span>地址获取中</div>
+            <div class="address-box"><span class="iconfont icon-shouhuodizhi"></span>{{address}}</div>
             <div class="search-box"><input type="text" placeholder="搜索商家、商品"></div>
           </div>
           <div class="nav-bar">
@@ -74,7 +74,7 @@
     name: 'index',
     data() {
       return {
-        title: '主页'
+        address:"地址获取中..."
       };
     },
     components: {

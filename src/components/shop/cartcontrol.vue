@@ -29,6 +29,9 @@
         }
       },
       addCart: function () {
+        if(!event._constructed){
+          return;
+        }
         if (!this.food.count) {
           Vue.set(this.food, 'count', 1);
         } else {
