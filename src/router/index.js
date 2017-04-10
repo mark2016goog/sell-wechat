@@ -15,6 +15,7 @@ import Setpassword from '../components/user/setpassword'
 import Comfirmorder from '../components/body/comfirmorder'
 import Sendaddress from '../components/body/sendaddress'
 import Addaddress from '../components/body/addaddress'
+import Payonline from '../components/body/payonline'
 
 Vue.use(Router)
 
@@ -82,6 +83,10 @@ export default new Router({
     {
       path:'/addaddress',
       component:Addaddress
+    },
+    {
+      path:'/payonline',
+      component:Payonline
     }
   ]
 })

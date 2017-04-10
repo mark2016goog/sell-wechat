@@ -79,7 +79,7 @@
       <div class="wait-pay-money">
         待支付￥44
       </div>
-      <div class="submit-order">
+      <div class="submit-order" @click="submitOrder">
         提交订单
       </div>
     </div>
@@ -108,6 +108,9 @@
       },
       selectAddress: function () {
         router.push('/sendaddress');
+      },
+      submitOrder:function(){
+        router.push('/payonline');
       }
     }
   }
