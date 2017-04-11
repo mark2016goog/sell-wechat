@@ -1,3 +1,10 @@
+/*
+ * @Author: wangdi 
+ * @Date: 2017-04-11 07:57:06 
+ * @Last Modified by:   wangdi 
+ * @Last Modified time: 2017-04-11 07:57:06 
+ */
+
 <template>
   <div class="addaddress">
     <v-topbar :title="topbar.title" :is_arrow_show="topbar.is_arrow_show" @back="topBack"></v-topbar>
@@ -35,7 +42,7 @@
         </div>
       </div>
       <div style="width:100%;padding:0 10px;box-sizing:border-box;margin-top:10px;"> 
-        <button type="button" class="btn" @click="login">确定</button>
+        <button type="button" class="btn" @click="submitAddress">确定</button>
       </div>
     </div>
   </div>
@@ -43,6 +50,7 @@
 <script>
   import router from '../../router'
   import topbar from '../header/header-top-bar'
+  import bus from '../../bus'
 
   export default{
     name:'addaddress',
@@ -64,10 +72,26 @@
     methods:{
       topBack:function(){
         router.go(-1);
+      },
+      submitAddress:function(){
+
       }
     },
     components:{
       'v-topbar':topbar
+    },
+    created:function(){
+      var self = this;
+      bus.$on('modifyaddress',function(data){
+        alert(data);
+        self.name = data.name;
+        self.sex = data.sex;
+        self.phonenumber = data.phonenumber;
+        self.address = data.address;
+        self.detail_address = data.detail_address;
+        self.door_number = data.door_number;
+        self.label = data.label;
+      });
     }
   }
 </script>

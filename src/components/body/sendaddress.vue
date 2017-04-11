@@ -7,7 +7,7 @@
         <div class="tip">点击下方按钮新增</div>
       </div>-->
       <ul class="address-list">
-         <li class="address-list-item">
+         <li class="address-list-item" @click="select">
           <div class="radio">
             <span class="iconfont icon-radio"></span>
           </div>
@@ -20,7 +20,7 @@
             <div class="bottom">
               <span class="label">公司</span>西溪北苑北区-北区五常街道文昌路于荆长大道口于荆长大道口于荆长大道口于荆长大道口
             </div>
-            <span class="iconfont icon-bi"></span>
+            <span class="iconfont icon-bi" @click.stop="modify"></span>
           </div>
         </li>
          <li class="address-list-item">
@@ -36,7 +36,7 @@
             <div class="bottom">
               <span class="label">公司</span>西溪北苑北区-北区五常街道文昌路于荆长大道口于荆长大道口于荆长大道口于荆长大道口
             </div>
-            <span class="iconfont icon-bi"></span>
+            <span class="iconfont icon-bi" @click.stop="modify"></span>
           </div>
         </li>
       </ul>
@@ -49,6 +49,7 @@
 <script>
   import router from '../../router'
   import topbar from '../header/header-top-bar'
+  import bus from '../../bus';
 
   export default{
     name:'sendaddress',
@@ -57,7 +58,16 @@
         topbar:{
           title:'收货地址',
           is_arrow_show:true
-        }
+        },
+         sendaddress:[{
+          name:'王迪',
+          sex:'先生',
+          phonenumber:18996231872,
+          address:'杭州市余杭区西溪北苑北区',
+          detail_address:'83栋一单元502',
+          door_number:'502',
+          label:'公司'
+        }]
       }
     },
     methods:{
@@ -66,6 +76,22 @@
       },
       addAddress:function(){
         router.push('/addaddress');
+      },
+      modify:function(){
+        let data = {
+          name:this.sendaddress[0].name,
+          sex:this.sendaddress[0].sex,
+          phonenumber:this.sendaddress[0].phonenumber,
+          address:this.sendaddress[0].address,
+          detail_address:this.sendaddress[0].detail_address,
+          door_number:this.sendaddress[0].door_number,
+          label:this.sendaddress[0].label
+        }
+        bus.$emit('modifyaddress',data)
+        router.push('/addaddress');
+      },
+      select:function(){
+        router.push('/comfirmorder');
       }
     },
     components:{

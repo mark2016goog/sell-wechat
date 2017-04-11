@@ -18,37 +18,35 @@
       <div class="pay-method">
         <h2>选择支付方式</h2>
         <div>
-          <div class="pay-method-item">
+          <div class="pay-method-item" @click="alipay">
             <div class="icon iconfont icon-z-alipay">
             </div>
             <div class="name">
               支付宝
             </div>
-            <div class="radio iconfont icon-radio">
+            <div class="radio iconfont icon-radio" :class="{active:method=='zhifubao'}">
             </div>
           </div>
-          <transition name="fold">
           <div class="flod-box" v-if="show_more_method">
-            <div class="pay-method-item">
+            <div class="pay-method-item" @click="weixin">
               <div class="icon iconfont icon-weixin-pay">
               </div>
               <div class="name">
                 微信支付
               </div>
-              <div class="radio iconfont icon-radio">
+              <div class="radio iconfont icon-radio" :class="{active:method=='weixin'}">
               </div>
             </div>
-            <div class="pay-method-item">
+            <div class="pay-method-item" @click="yinlian">
               <div class="icon iconfont icon-yinlianzhifu">
               </div>
               <div class="name">
                 银联支付
               </div>
-              <div class="radio iconfont icon-radio">
+              <div class="radio iconfont icon-radio" :class="{active:method=='yinlian'}">
               </div>
             </div>
           </div>
-          </transition>
         </div>
         <div class="show-more" @click="showMore">
           查看其它支付方式<i class="iconfont icon-xiasanjiao"></i>
@@ -72,15 +70,25 @@
           title: '在线支付',
           is_arrow_show: true,
         },
-        show_more_method:false
+        show_more_method: false,
+        method:'zhifubao'
       }
     },
     methods: {
       topBack() {
         router.go(-1);
       },
-      showMore:function(){
+      showMore: function () {
         this.show_more_method = !this.show_more_method;
+      },
+      alipay:function(){
+        this.method = 'zhifubao';
+      },
+      weixin:function(){
+        this.method = 'weixin';
+      },
+      yinlian:function(){
+        this.method = "yinlian";
       }
     },
     components: {
@@ -168,12 +176,16 @@
   .payonline-content .pay-method .pay-method-item .icon-z-alipay {
     color: #00a1e9;
   }
-
-  .payonline-content .pay-method .pay-method-item .icon-radio,
+  .payonline-content .pay-method .pay-method-item .icon-radio{
+    color: #ccc;
+  }
+  .payonline-content .pay-method .pay-method-item .icon-radio.active,
   .payonline-content .pay-method .pay-method-item .icon-weixin-pay {
     color: #00ba61;
   }
-
+  .payonline-content .pay-method .pay-method-item .icon-yinlianzhifu{
+    color: rgb(0, 150, 255);
+  }
   .payonline-content .pay-method .pay-method-item .name {
     flex: 1;
   }
@@ -191,21 +203,7 @@
     display: inline-block;
     margin-left: 10px;
   }
-   .flod-box {
-    transform: translate3d(0, 0, 0);
-    overflow: hidden;
-  }
-
-  .fold-enter-active,
-  .fold-leave-active {
-    transition: all 0.5s;
-  }
-
-  .fold-enter,
-  .fold-leave-active {
-    transform: translate3d(0, -100%, 0);
-  }
-  .payonline .bottom-content{
+  .payonline .bottom-content {
     position: fixed;
     background: #4cd964;
     bottom: 0;
@@ -216,4 +214,5 @@
     text-align: center;
     color: #fff;
   }
+
 </style>
