@@ -64,8 +64,8 @@
     name: 'index',
     data() {
       return {
-        address:"地址获取中...",
-        goods_data:[]
+        address: "地址获取中...",
+        goods_data: []
       };
     },
     components: {
@@ -73,23 +73,25 @@
       'v-footer': Footer
     },
     methods: {
-      goShopPage: function (data) {
-        router.push('/shoppage/'+id+'/goods');
+      goShopPage: function (id) {
+        router.push('/shoppage/' + id + '/goods');
       }
     },
     created: function () {
       var self = this;
-      axios.get('../../../static/restaurant.json',{params:{
-        offset:0,
-        limit:10,
-      }}).then(function(response){
+      axios.get('../../../static/restaurant.json', {
+        params: {
+          offset: 0,
+          limit: 10,
+        }
+      }).then(function (response) {
         self.goods_data = response.data;
+        self.$nextTick(function () {
+          new BScroll(document.querySelector('.index-content'), {
+            click: true,
+          });
+        });
       });
-      self.$nextTick(function () {
-        new BScroll(document.querySelector('.index-content'), {
-          click: true,
-        })
-      })
     }
   };
 
@@ -102,10 +104,12 @@
     height: 100%;
     overflow: hidden;
   }
-  .index-content{
+
+  .index-content {
     height: 100%;
     overflow: hidden;
   }
+
   .index-header {
     width: 100%;
     border-bottom: 1px solid #ddd;

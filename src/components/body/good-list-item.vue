@@ -31,8 +31,7 @@
     },
     methods: {
       routerTo: function () {
-        let data =this.restaurant_info;
-        this.$emit('go',data);
+        this.$emit('go',this.restaurant_info.id);
       }
     },
     components: {

@@ -13,7 +13,7 @@
             <h2 class="goods-item-list-title">{{item.name}}</h2>
             <ul class="goods-item-list-content">
               <li v-for="food in item.foods">
-                <div class="item-icon"><img :src="food.icon" alt=""></div>
+                <div class="item-icon"><img :src="food.image_path" alt=""></div>
                 <div class="item-description">
                   <h3 class="item-title">{{food.name}}</h3>
                   <div class="item-name">{{food.description}}</div>
@@ -106,10 +106,10 @@
       'v-cartcontrol':cartcontrol
     },
     created() {
-      alert(2);
+      
       let self = this;
-      axios.get('../../../static/data.json').then(function (response) {
-        self.goods = response.data.goods;
+      axios.get('../../../static/menu.json').then(function (response) {
+        self.goods = response.data.content;
         self.$nextTick(function () {
           self._initScroll();
           self._calculateHeight();
