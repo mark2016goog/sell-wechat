@@ -106,6 +106,7 @@
       'v-cartcontrol':cartcontrol
     },
     created() {
+      alert(2);
       let self = this;
       axios.get('../../../static/data.json').then(function (response) {
         self.goods = response.data.goods;

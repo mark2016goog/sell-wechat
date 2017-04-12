@@ -40,20 +40,9 @@
           <h2 class="content-title">
             <p>附近商家</p>
           </h2>
-          <good-list-item @go="goShopPage"></good-list-item>
-          <good-list-item></good-list-item>
-          <good-list-item></good-list-item>
-          <good-list-item></good-list-item>
-          <good-list-item></good-list-item>
-          <good-list-item></good-list-item>
-          <good-list-item></good-list-item>
-          <good-list-item></good-list-item>
-          <good-list-item></good-list-item>
-          <good-list-item></good-list-item>
-          <good-list-item></good-list-item>
-          <good-list-item></good-list-item>
-          <good-list-item></good-list-item>
-          <good-list-item></good-list-item>
+          <div>
+            <good-list-item v-for="item in goods_data" :key="item.id" :restaurant_info="item" @go="goShopPage"></good-list-item>
+          </div>
           <div class="more">
             更多商家接入中，敬请期待！
           </div>
@@ -69,12 +58,14 @@
   import goodListItem from './good-list-item';
   import Footer from '../footer/index-footer';
   import BScroll from 'better-scroll'
+  import axios from 'axios'
 
   export default {
     name: 'index',
     data() {
       return {
-        address:"地址获取中..."
+        address:"地址获取中...",
+        goods_data:[]
       };
     },
     components: {
@@ -82,12 +73,18 @@
       'v-footer': Footer
     },
     methods: {
-      goShopPage: function () {
-        router.push('/shoppage/goods');
+      goShopPage: function (data) {
+        router.push('/shoppage/'+id+'/goods');
       }
     },
     created: function () {
       var self = this;
+      axios.get('../../../static/restaurant.json',{params:{
+        offset:0,
+        limit:10,
+      }}).then(function(response){
+        self.goods_data = response.data;
+      });
       self.$nextTick(function () {
         new BScroll(document.querySelector('.index-content'), {
           click: true,

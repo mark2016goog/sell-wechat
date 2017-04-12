@@ -17,11 +17,11 @@
     </div>
     <div class="container">
       <ul class="details">
-        <li class="details-item"><i class="iconfont icon-dizhi"></i>收货地址管理<i class="iconfont icon-arrow"></i></li>
-         <li class="details-item"><i class="iconfont icon-daijinquan"></i>商家代金券<i class="iconfont icon-arrow"></i></li>
-          <li class="details-item"><i class="iconfont icon-yijianfankui"></i>意见反馈<i class="iconfont icon-arrow"></i></li>
-           <li class="details-item"><i class="iconfont icon-changjianwenti"></i>常见问题<i class="iconfont icon-arrow"></i></li>
-            <li class="details-item"><i class="iconfont icon-kefudianhua"></i>客服电话<i class="iconfont icon-arrow"></i></li>   
+        <li class="details-item" @click="manageAddress"><i class="iconfont icon-dizhi" style="color:rgb(0,150,255);"></i>收货地址管理<i class="iconfont icon-arrow"></i></li>
+         <li class="details-item"><i class="iconfont icon-daijinquan" style="color: rgb(255, 153, 0);"></i>商家代金券<i class="iconfont icon-arrow"></i></li>
+          <li class="details-item"><i class="iconfont icon-yijianfankui" style="color: rgb(0, 255, 222);"></i>意见反馈<i class="iconfont icon-arrow"></i></li>
+           <li class="details-item"><i class="iconfont icon-changjianwenti" style="color:rgb(255, 0, 0);"></i>常见问题<i class="iconfont icon-arrow"></i></li>
+            <li class="details-item"><i class="iconfont icon-kefudianhua" style="color: rgb(0, 150, 255);"></i>客服电话<i class="iconfont icon-arrow"></i></li>   
       </ul>
     </div>
     <v-footer></v-footer>
@@ -46,6 +46,9 @@ export default {
     login:function(){
       // router.push('/user/loginphonenumber');
       router.push('/user/accountsetting');
+    },
+    manageAddress:function(){
+      router.push('/sendaddress');
     }
   },
   components: {

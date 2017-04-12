@@ -25,9 +25,9 @@
       </div>
     </div>
     <div class="shoppage-tabbar">
-      <router-link class="tab-item" to="/shoppage/goods">商品</router-link>
-      <router-link class="tab-item" to="/shoppage/evaluate">评价</router-link>
-      <router-link class="tab-item" to="/shoppage/seller">商家</router-link>
+      <router-link class="tab-item" to="/shoppage/:id/goods">商品</router-link>
+      <router-link class="tab-item" to="/shoppage/:id/evaluate">评价</router-link>
+      <router-link class="tab-item" to="/shoppage/:id/seller">商家</router-link>
     </div>
     <transition name="fade">
       <div class="shoppage-detail" v-show="show_detail">
@@ -95,6 +95,9 @@
     components: {
       'v-star': Star,
       'v-goods': Goods
+    },
+    created:function(){
+      
     }
   }
 

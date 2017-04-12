@@ -34,7 +34,7 @@ export default new Router({
       component: PersonerCenter
     },
     {
-      path: '/shoppage',
+      path: '/shoppage/:id',
       component: ShopPage,
       children: [{
           path: 'evaluate',
