@@ -57,7 +57,7 @@
   }
 
   .cartcontrol .iconfont {
-    color: rgb(0, 160, 200);
+    color: rgb(0, 150, 255);
     font-size: 23px;
     line-height: 24px;
   }
@@ -80,7 +80,7 @@
   .cart-add {
     vertical-align: top;
     display: inline-block;
-    color: rgb(0, 160, 200);
+    color: rgb(0, 150, 255);
     line-height: 24px;
   }
 

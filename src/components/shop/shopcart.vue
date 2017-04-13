@@ -190,7 +190,7 @@
   }
 
   .shopcart .highlight-cart:before {
-    background: rgb(0, 160, 200);
+    background: rgb(0, 150, 255);
   }
 
   .shopcart .shopcart-totalprice {

@@ -3,7 +3,7 @@
     <div class="goods-content">
       <div class="goods-left-side" ref="menuWrapper">
         <ul class="goods-left-side-list">
-          <li class="goods-left-side-list-item" :class="{'on':index == currentIndex}" v-for="(item,index) in goods" @click="selectMenu(index,$event)"><span class="text"><span class="icon"></span>{{item.name}}</span>
+          <li class="goods-left-side-list-item" :class="{'on':index == currentIndex}" v-for="(item,index) in goods" @click="selectMenu(index,$event)"><span class="text"><img class="icon" :src="item.icon_url" v-if="item.icon_url"></img>{{item.name}}</span>
           </li>
         </ul>
       </div>
@@ -17,8 +17,8 @@
                 <div class="item-description">
                   <h3 class="item-title">{{food.name}}</h3>
                   <div class="item-name">{{food.description}}</div>
-                  <div class="sell-number"><span class="">月售{{food.sellCount}}份</span><span class="good-evaluation-rate">好评率{{food.rating}}%</span></div>
-                  <div class="price"><span class="now"><i>￥</i>{{food.price}}</span><span class="old" v-show="food.oldPrice"><i>￥</i>{{food.oldPrice}}</span>
+                  <div class="sell-number"><span class="">月售{{food.month_sales}}份</span> <span class="good-evaluation-rate">好评率{{food.rating}}%</span></div>
+                  <div class="price"><span class="now"><i>￥</i>{{food.price}}</span> <span class="old" v-show="food.original_price"><i>￥</i>{{food.original_price}}</span>
                   <div class="cartcontrol-wrap" style="display:inline-block;vertical-align:top;float:right;"><v-cartcontrol :food="food"></v-cartcontrol></div>
                   </div>
                 </div>
@@ -106,7 +106,6 @@
       'v-cartcontrol':cartcontrol
     },
     created() {
-      
       let self = this;
       axios.get('../../../static/menu.json').then(function (response) {
         self.goods = response.data.content;
@@ -135,6 +134,7 @@
     flex: 0 0 80px;
     width: 80px;
     background-color: #f3f5f7;
+    color: #666;
   }
 
   .goods-left-side-list-item {
@@ -145,12 +145,19 @@
     font-size: 0;
     line-height: 14px;
     border-bottom: 1px solid rgba(7, 17, 27, 0.1);
+    font-size: 12px;
   }
 
   .goods-left-side-list-item.on {
     background: #fff;
+    border-left: 3px solid rgb(0, 150, 255);
   }
-
+   .goods-left-side-list-item.on .text{
+    color: #666;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: bolder;
+   }
   .goods-left-side-list-item .icon {
     display: inline-block;
     height: 14px;
@@ -164,13 +171,13 @@
   .goods-left-side-list-item .text {
     display: table-cell;
     width: 56px;
-    font-size: 12px;
     font-weight: 200;
     vertical-align: middle;
   }
 
   .goods-right-content {
     flex: 1;
+    background: #fff;
   }
 
   .goods-item-list-title {
@@ -218,7 +225,7 @@
 
   .goods-item-list-content .item-description .item-title {
     margin-top: 2px;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 14px;
     color: rgb(7, 17, 27);
   }

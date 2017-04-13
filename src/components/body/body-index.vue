@@ -5,7 +5,7 @@
         <header class="index-header">
           <div class="top-banner">
             <div class="address-box"><span class="iconfont icon-dizhi"></span>{{address}}</div>
-            <div class="search-box"><input type="text" placeholder="搜索商家、商品"></div>
+            <div class="search-box" @click="search"><input type="text" placeholder="搜索商家、商品" readonly></div>
           </div>
           <div class="nav-bar">
             <ul class="nav-bar-list">
@@ -75,6 +75,9 @@
     methods: {
       goShopPage: function (id) {
         router.push('/shoppage/' + id + '/goods');
+      },
+      search:function(){
+        router.push('/search');
       }
     },
     created: function () {

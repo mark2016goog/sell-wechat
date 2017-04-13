@@ -7,45 +7,44 @@
           <img src="../../common/images/shoppage-topbanner-img.png" alt="" class="brand-img">
           <div class="brand-text">
             <div class="shop-name">
-              <span class="shop-name-icon"></span>粥品香坊（大运村）
+              <span class="shop-name-icon" v-if="restaurant_info.is_brand"></span>{{restaurant_info.name}}
             </div>
-            <p class="shop-send-time">蜂鸟专送 / 38分钟送达</p>
+            <p class="shop-send-time">小迪专送 / {{restaurant_info.order_lead_time}}分钟送达</p>
             <div class="shop-activity">
-              <span class="shop-activity-icon"></span>在线支付满28减5，满50减10
+              <span class="shop-activity-icon"></span>
+              {{restaurant_info.activities[0].description}}
             </div>
           </div>
         </div>
         <div class="shoppage-notice" @click="showDetail">
-          <span class="shop-notice-icon"></span>粥品香坊起烹饪粥料源于中国千年古法，再融合现代制作工艺加工而成，味道鲜美。
+          <span class="shop-notice-icon"></span>
+          {{restaurant_info.promotion_info}}
           <i class="iconfont icon-arrow"></i>
         </div>
         <div class="shop-activity-number" @click="showDetail">
-          5个<i class="iconfont icon-arrow"></i>
+ {{restaurant_info.activities.length}}个<i class="iconfont icon-arrow"></i>
+
         </div>
       </div>
     </div>
     <div class="shoppage-tabbar">
-      <router-link class="tab-item" to="/shoppage/:id/goods">商品</router-link>
-      <router-link class="tab-item" to="/shoppage/:id/evaluate">评价</router-link>
-      <router-link class="tab-item" to="/shoppage/:id/seller">商家</router-link>
+      <router-link class="tab-item" :to="'/shoppage/'+restaurant_info.id+'/goods'">商品</router-link>
+      <router-link class="tab-item" :to="'/shoppage/'+ restaurant_info.id +'/evaluate'">评价</router-link>
+      <router-link class="tab-item" :to="'/shoppage/'+restaurant_info.id+'/seller'">商家</router-link>
     </div>
     <transition name="fade">
       <div class="shoppage-detail" v-show="show_detail">
         <div class="detail-main clearfix">
           <div class="detail-content">
-            <div class="shop-name">粥品香坊(大运村)</div>
-            <v-star :score="score" :size="48"></v-star>
+            <div class="shop-name">{{restaurant_info.name}}</div>
+            <v-star :score="restaurant_info.rating" :size="48"></v-star>
             <div class="title">
               <div class="line"></div>
               <div class="title-text">优惠信息</div>
               <div class="line"></div>
             </div>
             <ul>
-              <li class="activity-item"><span class="icon"></span>在线支付满28减5，满50减10</li>
-              <li class="activity-item"><span class="icon"></span>在线支付满28减5，满50减10</li>
-              <li class="activity-item"><span class="icon"></span>在线支付满28减5，满50减10</li>
-              <li class="activity-item"><span class="icon"></span>在线支付满28减5，满50减10</li>
-              <li class="activity-item"><span class="icon"></span>在线支付满28减5，满50减10</li>
+              <li class="activity-item" v-for="item in restaurant_info.activities"><span class="icon">{{item.icon_name}}</span>{{item.description}}</li>
             </ul>
             <div class="title">
               <div class="line"></div>
@@ -53,7 +52,7 @@
               <div class="line"></div>
             </div>
             <div class="shop-bulletin">
-              <p class="shop-bulletin-text">粥品香坊其烹饪原料源于中国千年古法，再融合现代制作工艺，由世界烹饪大师屈浩先生领衔研发。坚守纯天然0添加良心品质深受消费者青睐，发展至今已成为粥类引领品牌。是2008年奥运会和2013年园博园指定餐饮提供商。</p>
+              <p class="shop-bulletin-text">{{restaurant_info.promotion_info}}</p>
             </div>
           </div>
         </div>
@@ -71,14 +70,20 @@
   import Star from '../component/star';
   import Goods from '../shop/goods'
   import router from '../../router'
-
+  import axios from 'axios'
 
   export default {
     name: 'shoppage',
     data() {
       return {
         show_detail: false,
-        score: 4.5
+        restaurant_info:{
+          activities:[
+            {
+              description:''
+            }
+          ]
+        },
       };
     },
     methods: {
@@ -97,7 +102,15 @@
       'v-goods': Goods
     },
     created:function(){
-      
+      var self = this;
+      axios.get('../../../static/restaurant.json', {
+        params: {
+          offset: 0,
+          limit: 10,
+        }
+      }).then(function (response) {
+        self.restaurant_info = response.data[0];
+      });
     }
   }
 

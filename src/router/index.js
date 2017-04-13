@@ -16,6 +16,7 @@ import Comfirmorder from '../components/body/comfirmorder'
 import Sendaddress from '../components/body/sendaddress'
 import Addaddress from '../components/body/addaddress'
 import Payonline from '../components/body/payonline'
+import Search from '../components/body/search'
 
 Vue.use(Router)
 
@@ -87,6 +88,10 @@ export default new Router({
     {
       path:'/payonline',
       component:Payonline
+    },
+    {
+      path:'/search',
+      component:Search
     }
   ]
 })
