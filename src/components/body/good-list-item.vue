@@ -89,6 +89,7 @@
 
   .good-list-item .good-list-item-right {
     flex: 1;
+    overflow: hidden;
   }
 
   .good-list-item .good-list-item-right .main {
@@ -167,6 +168,7 @@
   .discount{
     position: relative;
     max-height: 40px;
+    width: 100%;
     overflow: hidden;
   }
   .discount.show{
@@ -175,7 +177,10 @@
   .discount .discount-item {
     font-size: 10px;
     line-height: 20px;
-    
+    padding-right: 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;  
   }
   .discount .activities_num{
     position: absolute;

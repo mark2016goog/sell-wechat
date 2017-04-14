@@ -17,7 +17,7 @@
                 <div class="item-description">
                   <h3 class="item-title">{{food.name}}</h3>
                   <div class="item-name">{{food.description}}</div>
-                  <div class="sell-number"><span class="">月售{{food.month_sales}}份</span> <span class="good-evaluation-rate">好评率{{food.rating}}%</span></div>
+                  <div class="sell-number"><span class="">月售{{food.month_sales}}份</span> <span class="good-evaluation-rate" v-if="food.satisfy_rate > 0">好评率{{food.satisfy_rate}}%</span></div>
                   <div class="price"><span class="now"><i>￥</i>{{food.price}}</span> <span class="old" v-show="food.original_price"><i>￥</i>{{food.original_price}}</span>
                   <div class="cartcontrol-wrap" style="display:inline-block;vertical-align:top;float:right;"><v-cartcontrol :food="food"></v-cartcontrol></div>
                   </div>
@@ -233,7 +233,7 @@
   .goods-item-list-content .item-description .item-name {
     font-size: 10px;
     color: rgb(147, 153, 159);
-    line-height: 10px;
+    line-height: 12px;
     margin: 8px 0;
   }
 
@@ -268,7 +268,7 @@
     font-size: 10px;
     color: rgb(147, 153, 159);
     margin-top: 8px;
-    line-height: 10px;
+    line-height: 12px;
     margin-bottom: 4px;
   }
 
