@@ -5,6 +5,11 @@
         <header class="index-header">
           <div class="top-banner">
             <div class="address-box"><span class="iconfont icon-dizhi"></span>{{address}}</div>
+            <div class="weather">
+              <span class="temperature">{{weather.temperature}}°</span>
+              <span class="text">{{weather.description}}</span>
+              <img class="weather-icon" :src="weather.image_path"alt="">
+            </div>
             <div class="search-box" @click="search"><input type="text" placeholder="搜索商家、商品" readonly></div>
           </div>
           <div class="nav-bar">
@@ -65,7 +70,12 @@
     data() {
       return {
         address: "地址获取中...",
-        goods_data: []
+        goods_data: [],
+        weather: {
+          "temperature": 13,
+          "description": "晴夜",
+          "image_path": "http://fuss10.elemecdn.com/e/85/614c1229282673bb8609909812e76png.png?imageMogr/format/webp/thumbnail/!69x69r/gravity/Center/crop/69x69/"
+        }
       };
     },
     components: {
@@ -76,7 +86,7 @@
       goShopPage: function (id) {
         router.push('/shoppage/' + id + '/goods');
       },
-      search:function(){
+      search: function () {
         router.push('/search');
       }
     },
@@ -84,6 +94,8 @@
       var self = this;
       axios.get('../../../static/restaurant.json', {
         params: {
+          longitude: 120.207372,
+          latitude: 30.26409,
           offset: 0,
           limit: 10,
         }
@@ -116,6 +128,28 @@
   .index-header {
     width: 100%;
     border-bottom: 1px solid #ddd;
+    position: relative;
+  }
+
+  .index-header .weather {
+    position: absolute;
+    right: 15px;
+    color: #fff;
+    font-size: 10px;
+    top: 15px;
+    padding-right: 26px;
+  }
+
+  .index-header .weather span {
+    display: block;
+  }
+
+  .index-header .weather .weather-icon {
+    position: absolute;
+    height: 24px;
+    width: 24px;
+    right: 0;
+    top: 0;
   }
 
   .index-header .top-banner {

@@ -161,10 +161,7 @@
   .goods-left-side-list-item .icon {
     display: inline-block;
     height: 14px;
-    width: 14px;
-    background: url('../../common/images/decrease_1@2x.png') no-repeat center center;
-    background-size: 14px 14px;
-    vertical-align: top;
+    width: 10px;
     margin-right: 2px;
   }
 

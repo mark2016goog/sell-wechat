@@ -27,13 +27,13 @@
         <h2 class="title">公告与活动</h2>
         <p>{{restaurant_info.promotion_info}}</p>
         <ul>
-          <li v-for="item in restaurant_info.activities"><span class="activity-item"><span class="icon"></span>{{item.description}}</span></li>
+          <li v-for="item in restaurant_info.activities"><span class="activity-item"><span class="icon" style="color:#fff;margin-right:5px;font-size:10px;padding:2px;border-radius:2px;text-align:center;" :style="{backgroundColor:'#'+item.icon_color}">{{item.icon_name}}</span>{{item.description}}</span></li>
         </ul>
       </div>
       <div class="seller-infomation">
         <h2 class="title">商家信息</h2>
         <ul>
-          <li v-for="item in restaurant_info.supports"><span class="activity-item"><span class="icon"></span>{{item.description}}</span></li>
+          <li v-for="item in restaurant_info.supports"><span class="activity-item"><span class="icon" style="color:#fff;margin-right:5px;font-size:10px;padding:2px;border-radius:2px;text-align:center;" :style="{backgroundColor:'#'+item.icon_color}">{{item.icon_name}}</span>{{item.description}}</span></li>
         </ul>
       </div>
     </div>
@@ -181,7 +181,7 @@
   }
 
   .seller .notice-activity ul li ,.seller .seller-infomation ul li{
-    padding: 16px 12px;
+    padding: 12px;
     border-top: 1px solid rgba(7, 17, 27, 0.1);
   }
 
@@ -189,7 +189,7 @@
     display: inline-block;
     height: 16px;
     width: 100%;
-    line-height: 16px;
+    line-height: 20px;
     font-size: 12px;
     font-weight: 200;
     color: rgb(7, 17, 27);
@@ -200,8 +200,6 @@
     display: inline-block;
     height: 16px;
     width: 16px;
-    background: url('../../common/images/decrease_1@2x.png') no-repeat center center;
-    background-size: 16px 16px;
   }
 
 

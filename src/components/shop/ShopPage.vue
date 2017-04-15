@@ -3,15 +3,16 @@
     <div class="shoppage-topbanner">
       <span class="back-icon iconfont icon-arrow" @click.self="backIconClick"></span>
       <div class="shoppage-topbanner-content">
+        <span class="before" :style="{backgroundImage:'url('+restaurant_info.image_path+')'}"></span>
         <div class="shoppage-topbanner-info clearfix">
-          <img src="../../common/images/shoppage-topbanner-img.png" alt="" class="brand-img">
+          <img :src="restaurant_info.image_path" alt="" class="brand-img">
           <div class="brand-text">
             <div class="shop-name">
               <span class="shop-name-icon" v-if="restaurant_info.is_brand"></span>{{restaurant_info.name}}
             </div>
             <p class="shop-send-time">小迪专送 / {{restaurant_info.order_lead_time}}分钟送达</p>
             <div class="shop-activity">
-              <span class="shop-activity-icon"></span>
+              <span class="shop-activity-icon" style="color:#fff;margin-right:5px;font-size:10px;padding:2px;border-radius:2px;" :style="{backgroundColor:'#'+restaurant_info.activities[0].icon_color}">{{restaurant_info.activities[0].icon_name}}</span>
               {{restaurant_info.activities[0].description}}
             </div>
           </div>
@@ -44,7 +45,7 @@
               <div class="line"></div>
             </div>
             <ul>
-              <li class="activity-item" v-for="item in restaurant_info.activities"><span class="icon">{{item.icon_name}}</span>{{item.description}}</li>
+              <li class="activity-item" v-for="item in restaurant_info.activities"><span class="icon" style="color:#fff;margin-right:5px;font-size:10px;padding:2px;border-radius:2px;text-align:center;" :style="{backgroundColor:'#'+item.icon_color}">{{item.icon_name}}</span>{{item.description}}</li>
             </ul>
             <div class="title">
               <div class="line"></div>
@@ -140,15 +141,15 @@
     font-size: 14px;
   }
 
-  .shoppage-topbanner::before {
-    content: "";
+  .shoppage-topbanner span.before {
     display: block;
     position: absolute;
     right: 0;
     top: 0;
     left: 0;
     bottom: 0;
-    background: url('../../common/images/shoppage-topbanner-img.png') no-repeat center center;
+    background-repeat:no-repeat ;
+    background-position:center center;
     background-size: cover;
     filter: blur(10px);
     z-index: -1;
@@ -206,9 +207,7 @@
     display: inline-block;
     height: 12px;
     width: 12px;
-    vertical-align: top;
-    background: url('../../common/images/decrease_1@2x.png') no-repeat center center;
-    background-size: 12px 12px;
+    transform: scale(0.8);
     margin-right: 4px;
   }
 
@@ -372,9 +371,6 @@
     display: inline-block;
     height: 16px;
     width: 16px;
-    background: url('../../common/images/decrease_1@2x.png') no-repeat center center;
-    background-size: 16px 16px;
-    vertical-align: top;
     margin-right: 6px;
   }
 

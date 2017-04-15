@@ -12,8 +12,9 @@
           <v-star :score="restaurant_info.rating" :size="24"></v-star><span class="sell-number">月售 {{restaurant_info.recent_order_num}} 单</span><span class="send-time">{{restaurant_info.order_lead_time}}分钟</span></div>
         <div class="send-detail"><span class="send-price">起送价￥{{restaurant_info.minimum_order_amount}}</span><span class="send-money">配送费￥{{restaurant_info.delivery_fee}}</span></div>
       </div>
-      <div class="discount">
-        <p class="discount-item" v-for="item in restaurant_info.activities"><span class="activity-icon"></span>{{item.description}}</p>
+      <div class="discount" :class="{show:is_show_activities}">
+        <span class="activities_num"  v-if="restaurant_info.activities.length > 2" @click.stop="showActivites">{{restaurant_info.activities.length}}个活动<i class="iconfont icon-xiasanjiao"></i></span>
+        <p class="discount-item" v-for="item in restaurant_info.activities"><span class="activity-icon" style="color:#fff;margin-right:5px;font-size:10px;padding:2px;border-radius:2px;" :style="{backgroundColor:'#'+item.icon_color}">{{item.icon_name}}</span>{{item.description}}</p>
       </div>
     </div>
   </div>
@@ -24,7 +25,9 @@
   export default {
     name: 'good-list-item',
     data() {
-      return {};
+      return {
+        is_show_activities:false,
+      };
     },
     props: {
       restaurant_info: {
@@ -34,6 +37,9 @@
     methods: {
       routerTo: function () {
         this.$emit('go', this.restaurant_info.id);
+      },
+      showActivites:function(){
+        this.is_show_activities = !this.is_show_activities;
       }
     },
     components: {
@@ -158,19 +164,29 @@
     height: 60px;
     border-radius: 2px;
   }
-
+  .discount{
+    position: relative;
+    max-height: 40px;
+    overflow: hidden;
+  }
+  .discount.show{
+    max-height: 160px;
+  }
   .discount .discount-item {
     font-size: 10px;
-    line-height: 14px;
+    line-height: 20px;
+    
   }
-
-  .discount .discount-item .activity-icon {
+  .discount .activities_num{
+    position: absolute;
+    font-size: 10px;
+    right: 10px;
+    top: 5px;
+  }
+  .discount .activities_num .iconfont{
     display: inline-block;
-    width: 14px;
-    height: 14px;
-    vertical-align: top;
-    background: url('../../common/images/decrease_1@2x.png') no-repeat center center;
-    background-size: 12px 12px;
+    font-size: 8px;
+    transform: scale(0.8);
+    margin-left: 4px;
   }
-
 </style>
