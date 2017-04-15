@@ -88,6 +88,18 @@
       },
       search: function () {
         router.push('/search');
+      },
+      loadData:function(){
+        axios.get('../../../static/restaurant.json', {
+        params: {
+          longitude: 120.207372,
+          latitude: 30.26409,
+          offset: 0,
+          limit: 10,
+        }
+      }).then(function (response) {
+        self.goods_data.push(response.data);
+      });
       }
     },
     created: function () {
