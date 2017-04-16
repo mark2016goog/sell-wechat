@@ -5,29 +5,24 @@
         <div class="left-content">
           <span class="score">3.9</span>
           <span class="total-evaluate">综合评价</span>
-          <span class="high-rate">高于周边商家76.7%</span>
+          <span class="high-rate">高于周边商家{{(Number.parseFloat(top_score.compare_rating)*100).toFixed(1)}}%</span>
         </div>
         <div class="right-content">
           <div class="service"><span class="title">服务态度</span>
-            <v-star :score="goods_score" :size="36"></v-star><span class="score">{{service_score}}</span></div>
+            <v-star :score="Number.parseFloat(top_score.service_score).toFixed(1)" :size="36"></v-star><span class="score">{{Number.parseFloat(top_score.service_score).toFixed(1)}}</span></div>
           <div class="goods-evaluate"><span class="title">菜品评价</span>
-            <v-star :score="goods_score" :size="36"></v-star><span class="score" v-text="goods_score"></span></div>
-          <div class="send-time"><span class="title">送达时间</span><span class="time">39分钟</span></div>
+            <v-star :score="Number.parseFloat(top_score.food_score).toFixed(1)" :size="36"></v-star><span class="score" v-text="Number.parseFloat(top_score.food_score).toFixed(1)"></span></div>
+          <div class="send-time"><span class="title">送达时间</span><span class="time">{{top_score.deliver_time}}分钟</span></div>
         </div>
       </div>
       <div class="evaluate-bottom">
         <div class="evaluate-bottom-label">
-          <span class="label-item all">全部<span class="number">57</span></span>
-          <span class="label-item satisfaction">满意<span class="number">10</span></span>
-          <span class="label-item dissatisfaction">不满意<span class="number">4</span></span>
+          <span class="label-item all">全部<span class="number">{{rating_label.total}}</span></span>
+          <span class="label-item satisfaction">满意<span class="number">{{rating_label.safe}}</span></span>
+          <span class="label-item dissatisfaction">不满意<span class="number">{{rating_label.unsafe}}</span></span>
         </div>
         <div class="evaluate-bottom-content">
-          <v-evaluateitem></v-evaluateitem>
-          <v-evaluateitem></v-evaluateitem>
-          <v-evaluateitem></v-evaluateitem>
-          <v-evaluateitem></v-evaluateitem>
-          <v-evaluateitem></v-evaluateitem>
-          <v-evaluateitem></v-evaluateitem>
+          <v-evaluateitem v-for="(item,index) in rating" :key="index" :evaluate="item"></v-evaluateitem>
         </div>
       </div>
     </div>
@@ -37,13 +32,17 @@
   import Star from '../component/star'
   import EvaluateItem from '../component/evaluate-item'
   import BScroll from 'better-scroll'
+  import axios from 'axios'
 
   export default {
     name: 'evaluate',
     data() {
       return {
-        service_score: '3.9',
-        goods_score: '4.0'
+        top_score: {},
+        rating: [],
+        rating_label: {},
+        offset:0,
+        scroll:'',
       }
     },
     components: {
@@ -51,11 +50,64 @@
       'v-evaluateitem': EvaluateItem
     },
     created: function () {
-      this.$nextTick(function () {
-        new BScroll(document.querySelector('.evaluate'), {
-          click: true
+      let self = this;
+      axios.all([this.getScore(), this.getRatingCount(), this.getRating()]).then(axios.spread(function (score,
+        rating_label, rating) {
+        self.top_score = score.data;
+        self.rating_label = rating_label.data;
+        self.rating = rating.data;
+        self.$nextTick(function () {
+          if (!self.scroll) {
+            self.scroll = new BScroll(document.querySelector('.evaluate'), {
+              click: true,
+            });
+          } else {
+            self.scroll.refresh();
+          }
+          self.scroll.on('touchend', function () {
+            if (this.y < (this.maxScrollY)) {
+              self.loadData();
+            }
+          })
         });
-      });
+      }));
+    },
+    updated:function(){
+      if(this.scroll){
+        this.scroll.refresh();
+      }
+    },
+    methods: {
+      getScore() {
+        return axios.get('static/score.json');
+      },
+      getRatingCount() {
+        return axios.get('static/ratingcount.json');
+      },
+      getRating() {
+        var self = this;
+        return axios.get('static/rating.json', {
+          params: {
+            restaurant_id: self.$route.params.id,
+            offset: 0,
+            limit: 10
+          }
+        });
+      },
+      loadData(){
+        let self = this;
+        axios.get('static/rating.json', {
+          params: {
+            restaurant_id: self.$route.params.id,
+            offset: this.offset*10,
+            limit: 10
+          }
+        }).then(function(response){
+          self.rating = self.rating.concat(response.data);
+          self.offset++;
+        });
+
+      }
     }
   }
 
@@ -124,7 +176,7 @@
     margin-bottom: 8px;
   }
 
-  .top-score .right-content .title {
+  .top-score .right-content .send-time .title {
     vertical-align: top;
     display: inline-block;
     font-size: 12px;
@@ -135,9 +187,9 @@
   .top-score .right-content .score {
     vertical-align: top;
     display: inline-block;
-    font-size: 12px;
+    font-size: 16px;
     line-height: 18px;
-    margin-left: 4px;
+    margin-left: 10px;
     color: rgb(255, 153, 0);
   }
 
@@ -147,6 +199,9 @@
 
   .top-score .right-content .send-time .time {
     color: rgb(147, 153, 159);
+    display: inline-block;
+    font-size: 12px;
+    line-height: 18px;
   }
 
   .evaluate-bottom {

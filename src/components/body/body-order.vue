@@ -37,6 +37,6 @@ export default {
       background-color: #ddd;    
     }
     .order-content{
-      margin-top: 40px;
+      padding-top: 45px;
     }
 </style>

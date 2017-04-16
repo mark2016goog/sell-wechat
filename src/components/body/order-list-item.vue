@@ -1,100 +1,163 @@
 <template>
-  <div class="order-list-item ">
-   <h2 class="order-list-item-title">嘉鑫大碗牛肉面<i class="iconfont icon-arrow"></i><span class="order-status">订单完成</span></h2>
-   <div class="order-list-item-content clearfix">
-       <img src="../../common/images/order-icon.png" alt="" class="order-icon">
-       <div class="order-list-item-content-right">
-           <div class="price">￥<span class="order-price">23</span></div>
-           <div class="order-time">2017-01-19 11:57</div>
-           <div class="send-service">由 商家 提供配送服务</div>
-           <i class="iconfont icon-arrow"></i>
-       </div>
-   </div>
-   <div class="bottom-btn">
-       <span class="other-one">再来一单</span>
-   </div>
+  <div style="background:#fff;">
+    <div class="order-list-item">
+      <div class="left-content">
+        <img src="../../common/images/meishi.png" alt="" class="shop-icon">
+      </div>
+      <div class="right-content">
+        <div class="top-content">
+          <div class="shop-name">
+            东北饺子馆<span class="iconfont icon-arrow"></span>
+            <div class="time">35分钟以前</div>
+          </div>
+          <div class="order-status">
+            订单已完成
+          </div>
+        </div>
+        <div class="center-content">
+          <ul class="good-list">
+            <li class="good-list-item">
+              <div class="text">芹菜肉水饺芹菜肉水饺芹菜肉芹菜肉水饺芹菜肉水饺芹菜肉水饺水饺</div>
+              <div class="price">￥33.00</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="bottom">
+        <div class="again-order">
+            再来一单
+        </div>
+    </div>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'order-list-item',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    };
-  }
-};
+  export default {
+    name: 'order-list-item',
+    data() {
+      return {
+        order:{
+            image_path:'',
+            shop_name:'',
+            status:0,
+            time:'',
+            good_list:[
+                {
+                    text:'芹菜饺子芹菜饺子芹菜饺子芹菜饺子',
+                    price:33.00,
+                    number:1
+                }
+            ]
+        }
+      };
+    }
+  };
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-    .order-list-item{
-        margin-bottom: 15px;
-        border-top: 1px solid #ccc;
-        border-bottom: 1px solid #ccc;
-        background: #fff;
-    }
-    .order-list-item .order-list-item-title{
-        padding: 0 10px;
-        height: 50px;
-        line-height: 50px;
-        font-size: 16px;
-        font-weight: bold;
-        border-bottom: 1px solid #ccc;
-    }
-    .order-list-item-title .iconfont,.order-list-item-title .order-status{
-        font-weight: normal;
-    }
-    .order-list-item-title .order-status{
-        font-size: 14px;
-        color: #666;
-        float: right;
-    }
-    .order-list-item-content{
-        padding: 10px;
-    }
-    .order-list-item-content-right {
-       margin-left: 130px;
-       position: relative;
-    }
-    .order-list-item-content-right .price{
-        color: #ff0000;
-        font-size: 20px;
-        line-height: 30px;
-    }
-    .order-list-item-content-right .order-time,.order-list-item-content-right .send-service{
-        font-size: 16px;
-        line-height: 24px;
-    }
-    .order-list-item-content-right .icon-arrow{
-        position: absolute;
-        right: 0;
-        top: 50%;
-        margin-top: -10px;
-        font-size: 20px;
-    }
-    .order-list-item-content .order-icon{
-        width: 120px;
-        height: 80px;
-        float: left;
-    }
-    .bottom-btn{
-        border-top: 1px solid #ccc;
-        height: 50px;   
-        line-height: 50px;
-        text-align: right;
-        padding-right: 10px;
-    }
-    .bottom-btn .other-one{
-        display: inline-block;
-        height: 36px;
-        padding: 0 15px;
-        line-height: 36px;
-        border-radius: 4px;
-        border: 1px solid #ccc;
-        color: #666;
-        font-size: 14px;
+  .order-list-item {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    padding: 10px 10px 0;
+    background: #fff;
+    margin-top: 8px;
+    box-sizing: border-box;
+  }
 
-    }
+  .order-list-item .left-content {
+    flex: 0 0 40px;
+  }
+
+  .order-list-item .left-content .shop-icon {
+    display: inline-block;
+    width: 36px;
+    text-align: center;
+    border-radius: 2px;
+  }
+
+  .order-list-item .right-content {
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .order-list-item .right-content .top-content {
+    display: flex;
+    color: #222;
+    border-bottom: 1px solid rgba(7, 17, 27, 0.1);
+  }
+
+  .order-list-item .right-content .top-content .order-status {
+    flex: 0 0 120px;
+    font-size: 14px;
+    padding-top: 6px;
+    text-align: right;
+  }
+
+  .order-list-item .right-content .top-content .shop-name {
+    flex: 1;
+    font-size: 18px;
+    padding: 4px 0 10px;
+  }
+
+  .order-list-item .right-content .top-content .shop-name .iconfont {
+    font-size: 8px;
+    display: inline-block;
+    height: 18px;
+    line-height: 18px;
+    vertical-align: top;
+    margin-left: 6px;
+  }
+
+  .order-list-item .right-content .top-content .shop-name .time {
+    font-size: 10px;
+    margin-top: 8px;
+    color: #999;
+  }
+
+  .order-list-item .right-content .center-content {
+    padding: 20px 0;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .order-list-item .right-content .center-content .good-list-item {
+    display: flex;
+    font-size: 14px;
+    color: #666;
+    width: 100%;
+  }
+
+  .order-list-item .right-content .center-content .good-list-item .text {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 10px;
+  }
+
+  .order-list-item .right-content .center-content .good-list-item .price {
+    font-weight: bolder;
+    color: #222;
+  }
+  .bottom{
+      height: 50px;
+      line-height: 50px;
+      border-top: 1px solid rgba(7, 17, 27, 0.1);
+      border-bottom: 1px solid rgba(7, 17, 27, 0.1);
+      text-align: right;
+      padding-right: 10px;
+  }
+  .bottom .again-order{
+      display: inline-block;
+      height: 30px;
+      border: 1px solid rgb(0, 150, 255);
+      line-height: 30px;
+      padding: 0 10px;
+      border-radius: 3px;
+      color: rgb(0, 150, 255);   
+  }
 </style>

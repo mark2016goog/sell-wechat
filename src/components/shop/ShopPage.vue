@@ -1,9 +1,9 @@
 <template>
   <div class="shoppage">
     <div class="shoppage-topbanner">
+      <span class="before" :style="{backgroundImage:'url('+restaurant_info.image_path+')'}"></span>
       <span class="back-icon iconfont icon-arrow" @click.self="backIconClick"></span>
       <div class="shoppage-topbanner-content">
-        <span class="before" :style="{backgroundImage:'url('+restaurant_info.image_path+')'}"></span>
         <div class="shoppage-topbanner-info clearfix">
           <img :src="restaurant_info.image_path" alt="" class="brand-img">
           <div class="brand-text">
@@ -12,18 +12,16 @@
             </div>
             <p class="shop-send-time">小迪专送 / {{restaurant_info.order_lead_time}}分钟送达</p>
             <div class="shop-activity">
-              <span class="shop-activity-icon" style="color:#fff;margin-right:5px;font-size:10px;padding:2px;border-radius:2px;" :style="{backgroundColor:'#'+restaurant_info.activities[0].icon_color}">{{restaurant_info.activities[0].icon_name}}</span>
-              {{restaurant_info.activities[0].description}}
+              <span class="shop-activity-icon" style="color:#fff;margin-right:5px;font-size:10px;padding:2px;border-radius:2px;" :style="{backgroundColor:'#'+restaurant_info.activities[0].icon_color}">{{restaurant_info.activities[0].icon_name}}</span>{{restaurant_info.activities[0].description}}
             </div>
           </div>
         </div>
         <div class="shoppage-notice" @click="showDetail">
-          <span class="shop-notice-icon"></span>
-          {{restaurant_info.promotion_info}}
+          <span class="shop-notice-icon"></span> {{restaurant_info.promotion_info}}
           <i class="iconfont icon-arrow"></i>
         </div>
         <div class="shop-activity-number" @click="showDetail">
- {{restaurant_info.activities.length}}个<i class="iconfont icon-arrow"></i>
+          {{restaurant_info.activities.length}}个<i class="iconfont icon-arrow"></i>
 
         </div>
       </div>
@@ -45,7 +43,8 @@
               <div class="line"></div>
             </div>
             <ul>
-              <li class="activity-item" v-for="item in restaurant_info.activities"><span class="icon" style="color:#fff;margin-right:5px;font-size:10px;padding:2px;border-radius:2px;text-align:center;" :style="{backgroundColor:'#'+item.icon_color}">{{item.icon_name}}</span>{{item.description}}</li>
+              <li class="activity-item" v-for="item in restaurant_info.activities"><span class="icon" style="color:#fff;margin-right:5px;font-size:10px;padding:2px;border-radius:2px;text-align:center;"
+                  :style="{backgroundColor:'#'+item.icon_color}">{{item.icon_name}}</span>{{item.description}}</li>
             </ul>
             <div class="title">
               <div class="line"></div>
@@ -63,7 +62,9 @@
       </div>
     </transition>
     <div class="shoppage-tabcontent">
-      <router-view></router-view>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </div>
   </div>
 </template>
@@ -78,13 +79,6 @@
     data() {
       return {
         show_detail: false,
-        restaurant_info:{
-          activities:[
-            {
-              description:''
-            }
-          ]
-        },
       };
     },
     methods: {
@@ -95,23 +89,29 @@
         this.show_detail = false;
       },
       backIconClick: function () {
-        router.go('/index');
+        router.push('/index');
+      }
+    },
+    computed: {
+      restaurant_info() {
+        return this.$store.getters.getRestaurantById
       }
     },
     components: {
       'v-star': Star,
       'v-goods': Goods
     },
-    created:function(){
+    created: function () {
       var self = this;
-      axios.get('../../../static/restaurant.json', {
-        params: {
-          offset: 0,
-          limit: 10,
+      this.$store.commit('setId', this.$route.params.id);
+    },
+    watch: {
+      '$route' (to, from) {
+        // 对路由变化作出响应...
+        if(from.path.indexOf('index') > -1){
+          this.$store.commit('setId', this.$route.params.id);
         }
-      }).then(function (response) {
-        self.restaurant_info = response.data[0];
-      });
+      }
     }
   }
 
@@ -125,7 +125,7 @@
     transform: rotate(180deg);
     padding: 0px 10px 10px;
   }
-  
+
   .shoppage {
     position: relative;
     width: 100%;
@@ -148,11 +148,12 @@
     top: 0;
     left: 0;
     bottom: 0;
-    background-repeat:no-repeat ;
-    background-position:center center;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-position: center center;
     background-size: cover;
     filter: blur(10px);
-    z-index: -1;
+    z-index: 0;
   }
 
   .shoppage-topbanner-content {
@@ -389,11 +390,14 @@
     bottom: 0;
     overflow: hidden;
   }
-  
-  .fade-enter-active,.fade-leave-active{
+
+  .fade-enter-active,
+  .fade-leave-active {
     transition: opacity 0.5s;
   }
-  .fade-enter,.fade-leave-active{
+
+  .fade-enter,
+  .fade-leave-active {
     opacity: 0;
   }
 

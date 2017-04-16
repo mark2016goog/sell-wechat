@@ -21,8 +21,12 @@ import Search from '../components/body/search'
 Vue.use(Router)
 
 export default new Router({
-  model: history,
-  routes: [{
+  routes: [
+    {
+      path:'/',
+      redirect:'/index'
+    },
+    {
       path: '/index',
       component: Index
     },
@@ -42,7 +46,7 @@ export default new Router({
           component: Evaluate
         },
         {
-          path: 'goods',
+          path: 'goods/',
           component: Goods
         },
         {

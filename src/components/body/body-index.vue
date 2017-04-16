@@ -8,7 +8,7 @@
             <div class="weather">
               <span class="temperature">{{weather.temperature}}°</span>
               <span class="text">{{weather.description}}</span>
-              <img class="weather-icon" :src="weather.image_path"alt="">
+              <img class="weather-icon" :src="weather.image_path" alt="">
             </div>
             <div class="search-box" @click="search"><input type="text" placeholder="搜索商家、商品" readonly></div>
           </div>
@@ -48,9 +48,9 @@
           <div>
             <good-list-item v-for="item in goods_data" :key="item.id" :restaurant_info="item" @go="goShopPage"></good-list-item>
           </div>
-          <div class="more">
-            更多商家接入中，敬请期待！
-          </div>
+        </div>
+        <div class="more">
+            {{more_text}}
         </div>
       </div>
     </div>
@@ -63,6 +63,7 @@
   import goodListItem from './good-list-item';
   import Footer from '../footer/index-footer';
   import BScroll from 'better-scroll'
+  import IScroll from 'iscroll'
   import axios from 'axios'
 
   export default {
@@ -75,7 +76,10 @@
           "temperature": 13,
           "description": "晴夜",
           "image_path": "http://fuss10.elemecdn.com/e/85/614c1229282673bb8609909812e76png.png?imageMogr/format/webp/thumbnail/!69x69r/gravity/Center/crop/69x69/"
-        }
+        },
+        offset: 1,
+        scroll:'',
+        has_data:true,
       };
     },
     components: {
@@ -89,22 +93,38 @@
       search: function () {
         router.push('/search');
       },
-      loadData:function(){
-        axios.get('../../../static/restaurant.json', {
-        params: {
-          longitude: 120.207372,
-          latitude: 30.26409,
-          offset: 0,
-          limit: 10,
-        }
-      }).then(function (response) {
-        self.goods_data.push(response.data);
-      });
+      loadData: function () {
+        var self = this;
+        axios.get('static/restaurant.json', {
+          params: {
+            longitude: 120.207372,
+            latitude: 30.26409,
+            offset: self.offset*10,
+            limit: 10,
+          }
+        }).then(function (response) {
+          self.goods_data = self.goods_data.concat(response.data);
+          self.$store.commit('setRestaurant',response.data);
+          self.offset += 1;
+          if(response.data.length < 10){
+            self.has_data = false;
+          }
+        });
+      }
+    },
+    computed:{
+      more_text(){
+        return this.has_data? '加载中...':'更多商家正在接入中';
+      }
+    },
+    updated:function(){
+      if(this.scroll){
+        this.scroll.refresh();
       }
     },
     created: function () {
       var self = this;
-      axios.get('../../../static/restaurant.json', {
+      axios.get('static/restaurant.json', {
         params: {
           longitude: 120.207372,
           latitude: 30.26409,
@@ -113,15 +133,27 @@
         }
       }).then(function (response) {
         self.goods_data = response.data;
+        self.$store.commit('setRestaurant',response.data);
         self.$nextTick(function () {
-          new BScroll(document.querySelector('.index-content'), {
-            click: true,
-          });
+          if (!self.scroll) {
+            self.scroll = new BScroll(document.querySelector('.index-content'), {
+              click: true,
+              probeType: 3
+            });
+          } else {
+            self.scroll.refresh();
+          }
+          self.scroll.on('touchend', function () {
+            if (this.y < (this.maxScrollY)) {
+              if(self.has_data){
+                self.loadData();
+              } 
+            }
+          })
         });
       });
     }
-  };
-
+  }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -238,12 +270,13 @@
     background-color: #ddd;
   }
 
-  .content .more {
+  .more {
     text-align: center;
-    height: 90px;
+    height: 20px;
     background-color: #f3f3ea;
-    margin-top: -10px;
-    padding-top: 20px;
+    position: absolute;
+    bottom: -30px;
+    width: 100%;
   }
 
   .content .content-title {
@@ -259,5 +292,4 @@
     padding-left: 20px;
     border-left: 4px solid #fdad3a;
   }
-
 </style>

@@ -106,8 +106,9 @@
       'v-cartcontrol':cartcontrol
     },
     created() {
+      console.log(this.$route.params);
       let self = this;
-      axios.get('../../../static/menu.json').then(function (response) {
+      axios.get('static/menu.json').then(function (response) {
         self.goods = response.data.content;
         self.$nextTick(function () {
           self._initScroll();

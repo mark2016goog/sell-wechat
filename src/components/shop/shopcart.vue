@@ -2,7 +2,7 @@
   <div class="shopcart">
     <div class="shopcart-content" @click="toggleList">
       <div class="shopcart-totalprice" :class="{'highlight-price':total_count>0}"><span class="iconfont icon-shopcart" :class="{'highlight-cart':total_count>0}"><i class="food-total-count" v-if="total_count">{{total_count}}</i></span>￥{{total_price}}</div>
-      <div class="shopcart-send-money"> 另需配送费{{deliveryPrice}}元</div>
+      <div class="shopcart-send-money"> 配送费{{deliveryPrice}}元</div>
       <div class="littleprice" :class="{cansend:total_price>= minPrice}" @click="settlement">{{pay_description}}</div>
     </div>
     <transition name="fold">
@@ -278,14 +278,17 @@
   .shopcart-list .shopcart-list-item {
     line-height: 48px;
     border-bottom: 1px solid #d7d7d7;
-    padding: 0 18px;
+    padding: 0 8px;
     display: flex;
     position: relative;
   }
 
   .shopcart-list .shopcart-list-item .name {
     color: rgb(7, 17, 27);
-    flex: 0 0 170px;
+    flex: 0 0 150px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
     font-size: 14px;
   }
 
@@ -297,6 +300,9 @@
     flex: 1;
     color: rgb(240, 20, 20);
     font-size: 14px;
+    padding-right: 64px;
+    text-align: right;
+
   }
 
   .shopcart-list .shopcart-list-item .price .price-icon {

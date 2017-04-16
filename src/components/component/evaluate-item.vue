@@ -1,22 +1,19 @@
 <template>
   <div class="evaluateitem">
     <div class="left-content">
-      <img src="../../common/images/user-icon.jpg" alt="">
+      <img :src="evaluate.content.avatar" alt="">
     </div>
     <div class="right-content">
       <div class="top-content">
-        <div class="user-date-box"><span class="user-name">让风消亡</span><span class="evaluate-date">2017-03-6 21:45</span></div>
+        <div class="user-date-box"><span class="user-name">{{evaluate.content.username}}</span><span class="evaluate-date">{{evaluate.content.rated_at}}</span></div>
         <div class="star-time-box">
-          <v-star score="4.0" :size="24"></v-star><span class="spend-time">80分钟送达</span></div>
+          <v-star :score="evaluate.content.rating_star" :size="24"></v-star><span class="spend-time">{{evaluate.content.time_spent_desc}}</span></div>
       </div>
       <div class="center-content">
-        油条凉了，而且没有酱。75分钟才到。很慢。送餐员态度不错，但毕竟好晚了啊。
+        {{evaluate.content.rating_text}}
       </div>
       <div class="bottom-content">
-        <span class="goods-label">西红柿鸡蛋面</span>
-        <span class="goods-label">次坞打面大碗</span>
-        <span class="goods-label">次坞打面大碗</span>
-        <span class="goods-label">次坞打面大碗</span>
+        <span class="goods-label" v-for="item in evaluate.content.item_ratings">{{item.food_name}}</span>
       </div>
     </div>
   </div>
@@ -28,6 +25,9 @@
     name: 'evaluateitem',
     components: {
       'v-star': Star
+    },
+    props:{
+      evaluate:Object
     }
   }
 

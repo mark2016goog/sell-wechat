@@ -168,10 +168,7 @@
   .discount{
     position: relative;
     max-height: 40px;
-<<<<<<< HEAD
-=======
     width: 100%;
->>>>>>> 353df80e3d4d8330fa03c58b78792ff331569369
     overflow: hidden;
   }
   .discount.show{
@@ -180,14 +177,10 @@
   .discount .discount-item {
     font-size: 10px;
     line-height: 20px;
-<<<<<<< HEAD
-    
-=======
     padding-right: 10px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;  
->>>>>>> 353df80e3d4d8330fa03c58b78792ff331569369
   }
   .discount .activities_num{
     position: absolute;
