@@ -28,7 +28,7 @@
         </ul>
       </div>
     </div>
-    <v-shopcart :minPrice="30" :deliveryPrice="10" :selectFoods = "selectFoods"></v-shopcart>
+    <v-shopcart :restaurant_id="$route.params.id" :selectFoods = "selectFoods"></v-shopcart>
   </div>
 </template>
 <script>
@@ -106,7 +106,6 @@
       'v-cartcontrol':cartcontrol
     },
     created() {
-      console.log(this.$route.params);
       let self = this;
       axios.get('static/menu.json').then(function (response) {
         self.goods = response.data.content;

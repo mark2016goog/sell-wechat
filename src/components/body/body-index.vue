@@ -63,7 +63,6 @@
   import goodListItem from './good-list-item';
   import Footer from '../footer/index-footer';
   import BScroll from 'better-scroll'
-  import IScroll from 'iscroll'
   import axios from 'axios'
 
   export default {

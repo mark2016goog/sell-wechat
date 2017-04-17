@@ -2,8 +2,8 @@
   <div class="shopcart">
     <div class="shopcart-content" @click="toggleList">
       <div class="shopcart-totalprice" :class="{'highlight-price':total_count>0}"><span class="iconfont icon-shopcart" :class="{'highlight-cart':total_count>0}"><i class="food-total-count" v-if="total_count">{{total_count}}</i></span>￥{{total_price}}</div>
-      <div class="shopcart-send-money"> 配送费{{deliveryPrice}}元</div>
-      <div class="littleprice" :class="{cansend:total_price>= minPrice}" @click="settlement">{{pay_description}}</div>
+      <div class="shopcart-send-money"> 配送费{{restaurant_info.delivery_fee}}元</div>
+      <div class="littleprice" :class="{cansend:total_price>= restaurant_info.minimum_order_amount}" @click="settlement">{{pay_description}}</div>
     </div>
     <transition name="fold">
       <div class="shopcart-list" v-show="listShow">
@@ -45,13 +45,8 @@
       selectFoods: {
         type: Array,
       },
-      deliveryPrice: {
-        type: Number,
-        default: 0
-      },
-      minPrice: {
-        type: Number,
-        default: 0
+      restaurant_id: {
+        type: String
       }
     },
     components: {
@@ -73,14 +68,20 @@
         this.fold = true;
       },
       settlement: function (e) {
-        if (this.total_price >= this.minPrice) {
+        if (this.total_price >= this.restaurant_info.minimum_order_amount) {
           e.stopPropagation();
           // router.push('/user/loginphonenumber');
           router.push('/comfirmorder');
         }
       }
     },
+    created: function () {
+      this.$store.commit('setId', this.restaurant_id);
+    },
     computed: {
+      restaurant_info() {
+        return this.$store.getters.getRestaurantById;
+      },
       total_price() {
         let total = 0;
         this.selectFoods.forEach((food) => {
@@ -97,9 +98,9 @@
       },
       pay_description() {
         if (this.total_price == 0) {
-          return `￥${this.minPrice}元起送`;
-        } else if (this.total_price < this.minPrice) {
-          let diff = this.minPrice - this.total_price;
+          return `￥${this.restaurant_info.minimum_order_amount}元起送`;
+        } else if (this.total_price < this.restaurant_info.minimum_order_amount) {
+          let diff = this.restaurant_info.minimum_order_amount - this.total_price;
           return `还差${diff}元起送`;
         } else {
           return '去结算';
@@ -302,7 +303,6 @@
     font-size: 14px;
     padding-right: 64px;
     text-align: right;
-
   }
 
   .shopcart-list .shopcart-list-item .price .price-icon {

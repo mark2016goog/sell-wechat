@@ -17,7 +17,7 @@
           </div>
         </div>
         <div class="shoppage-notice" @click="showDetail">
-          <span class="shop-notice-icon"></span> {{restaurant_info.promotion_info}}
+          <span class="shop-notice-icon"></span> {{restaurant_info.promotion_info?restaurant_info.promotion_info:'欢迎光临'+ restaurant_info.name}}
           <i class="iconfont icon-arrow"></i>
         </div>
         <div class="shop-activity-number" @click="showDetail">
@@ -52,7 +52,7 @@
               <div class="line"></div>
             </div>
             <div class="shop-bulletin">
-              <p class="shop-bulletin-text">{{restaurant_info.promotion_info}}</p>
+              <p class="shop-bulletin-text">{{restaurant_info.promotion_info?restaurant_info.promotion_info:'欢迎光临'+ restaurant_info.name}}</p>
             </div>
           </div>
         </div>
@@ -102,7 +102,6 @@
       'v-goods': Goods
     },
     created: function () {
-      var self = this;
       this.$store.commit('setId', this.$route.params.id);
     },
     watch: {

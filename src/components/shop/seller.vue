@@ -3,7 +3,7 @@
     <div class="seller-box">
       <div class="seller-top">
         <div class="seller-name">
-         {{restaurant_info.name}}
+          {{restaurant_info.name}}
         </div>
         <div class="star-sell-num">
           <v-star :score="restaurant_info.rating" :size="star.size"></v-star><span class="sell-count">月售{{restaurant_info.recent_order_num}}单</span>
@@ -25,15 +25,17 @@
       </div>
       <div class="notice-activity">
         <h2 class="title">公告与活动</h2>
-        <p>{{restaurant_info.promotion_info}}</p>
+        <p>{{restaurant_info.promotion_info?restaurant_info.promotion_info:'欢迎光临'+ restaurant_info.name}}</p>
         <ul>
-          <li v-for="item in restaurant_info.activities"><span class="activity-item"><span class="icon" style="color:#fff;margin-right:5px;font-size:10px;padding:2px;border-radius:2px;text-align:center;" :style="{backgroundColor:'#'+item.icon_color}">{{item.icon_name}}</span>{{item.description}}</span></li>
+          <li v-for="item in restaurant_info.activities"><span class="activity-item"><span class="icon" style="color:#fff;margin-right:5px;font-size:10px;padding:2px;border-radius:2px;text-align:center;" :style="{backgroundColor:'#'+item.icon_color}">{{item.icon_name}}</span>{{item.description}}</span>
+          </li>
         </ul>
       </div>
       <div class="seller-infomation">
         <h2 class="title">商家信息</h2>
         <ul>
-          <li v-for="item in restaurant_info.supports"><span class="activity-item"><span class="icon" style="color:#fff;margin-right:5px;font-size:10px;padding:2px;border-radius:2px;text-align:center;" :style="{backgroundColor:'#'+item.icon_color}">{{item.icon_name}}</span>{{item.description}}</span></li>
+          <li v-for="item in restaurant_info.supports"><span class="activity-item"><span class="icon" style="color:#fff;margin-right:5px;font-size:10px;padding:2px;border-radius:2px;text-align:center;" :style="{backgroundColor:'#'+item.icon_color}">{{item.icon_name}}</span>{{item.description}}</span>
+          </li>
         </ul>
       </div>
     </div>
@@ -50,28 +52,23 @@
         star: {
           size: '36'
         },
-        restaurant_info:{},
+
       }
     },
     components: {
       'v-star': Star
     },
+    computed: {
+      restaurant_info() {
+        return this.$store.getters.getRestaurantById;
+      }
+    },
     created: function () {
-
-      var self = this;
-      axios.get('../../../static/restaurant.json', {
-        params: {
-          offset: 0,
-          limit: 10,
-        }
-      }).then(function (response) {
-        self.restaurant_info = response.data[0];
-        self.$nextTick(function () {
-          new BScroll(document.querySelector('.seller'), {
-            click: true,
-            bounce: false
-          });
-        })
+      this.$store.commit('setId', this.$route.params.id);
+      this.$nextTick(function(){
+        new BScroll(document.querySelector('.seller'), {
+          click: true,
+        });
       });
     }
   }
@@ -158,7 +155,8 @@
     border-left: 1px solid rgba(7, 17, 27, 0.1);
   }
 
-  .seller .notice-activity,.seller .seller-infomation {
+  .seller .notice-activity,
+  .seller .seller-infomation {
     border-top: 1px solid rgba(7, 17, 27, 0.1);
     border-bottom: 1px solid rgba(7, 17, 27, 0.1);
     margin: 18px 0;
@@ -166,7 +164,8 @@
     background-color: #fff;
   }
 
-  .seller .notice-activity .title,.seller .seller-infomation .title {
+  .seller .notice-activity .title,
+  .seller .seller-infomation .title {
     font-size: 14px;
     color: rgb(7, 17, 27);
     margin-bottom: 8px;
@@ -180,12 +179,14 @@
     padding-left: 12px;
   }
 
-  .seller .notice-activity ul li ,.seller .seller-infomation ul li{
+  .seller .notice-activity ul li,
+  .seller .seller-infomation ul li {
     padding: 12px;
     border-top: 1px solid rgba(7, 17, 27, 0.1);
   }
 
-  .seller .notice-activity .activity-item ,.seller .seller-infomation .activity-item{
+  .seller .notice-activity .activity-item,
+  .seller .seller-infomation .activity-item {
     display: inline-block;
     height: 16px;
     width: 100%;
@@ -196,12 +197,10 @@
     margin: 0;
   }
 
-  .seller .notice-activity .activity-item .icon .seller .seller-infomation .activity-item .icon{
+  .seller .notice-activity .activity-item .icon .seller .seller-infomation .activity-item .icon {
     display: inline-block;
     height: 16px;
     width: 16px;
   }
-
-
 
 </style>
