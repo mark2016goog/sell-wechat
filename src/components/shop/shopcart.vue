@@ -39,6 +39,7 @@
     data() {
       return {
         fold: true,
+        is_login:true,
       }
     },
     props: {
@@ -70,8 +71,14 @@
       settlement: function (e) {
         if (this.total_price >= this.restaurant_info.minimum_order_amount) {
           e.stopPropagation();
-          // router.push('/user/loginphonenumber');
-          router.push('/comfirmorder');
+          localStorage.setItem(this.restaurant_id,JSON.stringify(this.selectFoods));
+          if(!this.is_login){
+            router.push('/user/loginphonenumber');
+          }
+          else{
+            router.push('/comfirmorder/'+this.restaurant_id);
+          }
+          
         }
       }
     },

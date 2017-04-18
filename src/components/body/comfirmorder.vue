@@ -26,7 +26,7 @@
         </div>
         <div class="desciprtion">
           <div class="top">
-            尽快送达 | 预计 21:59
+            尽快送达 | 预计 {{time}}
           </div>
           <div class="bottom">
             小迪专送
@@ -39,12 +39,12 @@
         <span class="iconfont icon-arrow"></span>
       </div>
       <div class="order-detail">
-        <h2 class="shop-name"><img src="../../common/images/meishi.png" alt="">粥面小吃</h2>
+        <h2 class="shop-name"><img :src="restaurant_info.image_path" alt="">{{restaurant_info.name}}</h2>
         <ul class="order-food-list">
-          <li class="order-food-list-item">
-            <div class="food-name">炒粉干</div>
-            <div class="food-number">x2</div>
-            <div class="food-total-price">￥30</div>
+          <li class="order-food-list-item" v-for="food in order">
+            <div class="food-name">{{food.name}}</div>
+            <div class="food-number">x{{food.count}}</div>
+            <div class="food-total-price">￥{{food.price*food.count}}</div>
           </li>
         </ul>
         <div class="box-fee">
@@ -56,7 +56,7 @@
         <div class="send-fee">
           <div class="text">配送费</div>
           <div class="send-money">
-            ￥4
+            ￥{{restaurant_info.delivery_fee}}
           </div>
         </div>
       </div>
@@ -77,7 +77,7 @@
     </div>
     <div class="bottom-content">
       <div class="wait-pay-money">
-        待支付￥44
+        待支付￥{{total_price}}
       </div>
       <div class="submit-order" @click="submitOrder">
         提交订单
@@ -95,7 +95,10 @@
       return {
         topbar: {
           title: '确认订单',
-          is_arrow_show: true
+          is_arrow_show: true,
+          time:'',
+          total_price:'',
+          order:[]
         }
       }
     },
@@ -110,8 +113,28 @@
         router.push('/sendaddress');
       },
       submitOrder:function(){
-        router.push('/payonline');
+        router.push('/payonline/'+this.$route.params.id);
       }
+    },
+    computed:{
+      restaurant_info(){
+        return this.$store.getters.getRestaurantById;
+      },
+      total_price(){
+         var sum = 0;
+         this.order.forEach(function(food){
+          if(food.count){
+            sum+=food.count*food.price;
+          }
+         });
+         return sum+this.restaurant_info.delivery_fee + 4;
+      }
+    },
+    created:function(){
+      let restaurant_id = this.$route.params.id;
+      this.$store.commit('setId',restaurant_id);
+      this.time = (new Date().getHours() < 10 ? ('0'+new Date().getHours()):new Date().getHours()) + ':'+ (Number.parseInt(new Date().getMinutes()) + 30);
+      this.order = JSON.parse(localStorage.getItem(restaurant_id));
     }
   }
 

@@ -4,14 +4,14 @@
     <div class="payonline-content">
       <div class="pay-time">
         <p>支付剩余时间</p>
-        <div class="time">5：00</div>
+        <div class="time">{{time}}</div>
         <div class="pay-detail">
-          <div class="shop-name">轰伽伽哩饭（仓前路店） 外卖订单</div>
+          <div class="shop-name">{{restaurant_info.name}} 外卖订单</div>
           <div class="detail">
             详情
           </div>
           <div class="total-price">
-            ￥33:00
+            {{total_price}} 元
           </div>
         </div>
       </div>
@@ -53,7 +53,7 @@
         </div>
       </div>
     </div>
-    <div class="bottom-content">
+    <div class="bottom-content" @click="comfirmPay">
       确认支付
     </div>
   </div>
@@ -71,7 +71,9 @@
           is_arrow_show: true,
         },
         show_more_method: false,
-        method:'zhifubao'
+        method: 'zhifubao',
+        order:[],
+        time:'15:00'
       }
     },
     methods: {
@@ -81,18 +83,64 @@
       showMore: function () {
         this.show_more_method = !this.show_more_method;
       },
-      alipay:function(){
+      alipay: function () {
         this.method = 'zhifubao';
       },
-      weixin:function(){
+      weixin: function () {
         this.method = 'weixin';
       },
-      yinlian:function(){
+      yinlian: function () {
         this.method = "yinlian";
+      },
+      comfirmPay(){
+        switch(this.method){
+          case 'zhifubao':
+             alert('使用支付宝支付');
+             break;
+          case 'weixin':
+             alert('使用微信支付');
+             break;
+          case 'yinlian':
+             alert('使用银联支付');
+             break;
+        }
+        let good_list = [];
+        this.order.forEach(function(food){
+          good_list.push({
+            name:food.name,
+            count:food.count,
+            price:food.price
+          });
+        })
+        var data = {
+          shop_name:this.restaurant_info.name,
+          status:1,
+          time:new Date(),
+          good_list:good_list
+        }
+      }
+    },
+    computed: {
+      restaurant_info() {
+        return this.$store.getters.getRestaurantById;
+      },
+      total_price() {
+        var sum = 0;
+        this.order.forEach(function (food) {
+          if (food.count) {
+            sum += food.count * food.price;
+          }
+        });
+        return sum + this.restaurant_info.delivery_fee + 4;
       }
     },
     components: {
       'v-topbar': topbar
+    },
+    created: function () {
+      let restaurant_id = this.$route.params.id;
+      this.$store.commit('setId', restaurant_id);
+      this.order = JSON.parse(localStorage.getItem(restaurant_id));
     }
   }
 
@@ -176,16 +224,20 @@
   .payonline-content .pay-method .pay-method-item .icon-z-alipay {
     color: #00a1e9;
   }
-  .payonline-content .pay-method .pay-method-item .icon-radio{
+
+  .payonline-content .pay-method .pay-method-item .icon-radio {
     color: #ccc;
   }
+
   .payonline-content .pay-method .pay-method-item .icon-radio.active,
   .payonline-content .pay-method .pay-method-item .icon-weixin-pay {
     color: #00ba61;
   }
-  .payonline-content .pay-method .pay-method-item .icon-yinlianzhifu{
+
+  .payonline-content .pay-method .pay-method-item .icon-yinlianzhifu {
     color: rgb(0, 150, 255);
   }
+
   .payonline-content .pay-method .pay-method-item .name {
     flex: 1;
   }
@@ -203,6 +255,7 @@
     display: inline-block;
     margin-left: 10px;
   }
+
   .payonline .bottom-content {
     position: fixed;
     background: #4cd964;

@@ -78,7 +78,7 @@ export default new Router({
       ]
     },
     {
-      path:'/comfirmorder',
+      path:'/comfirmorder/:id',
       component:Comfirmorder
     },
     {
@@ -90,7 +90,7 @@ export default new Router({
       component:Addaddress
     },
     {
-      path:'/payonline',
+      path:'/payonline/:id',
       component:Payonline
     },
     {
