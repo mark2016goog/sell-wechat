@@ -71,11 +71,7 @@
       return {
         address: "地址获取中...",
         goods_data: [],
-        weather: {
-          "temperature": 13,
-          "description": "晴夜",
-          "image_path": "http://fuss10.elemecdn.com/e/85/614c1229282673bb8609909812e76png.png?imageMogr/format/webp/thumbnail/!69x69r/gravity/Center/crop/69x69/"
-        },
+        weather: {},
         offset: 1,
         scroll:'',
         has_data:true,
@@ -94,7 +90,7 @@
       },
       loadData: function () {
         var self = this;
-        axios.get('static/restaurant.json', {
+        axios.get('/restaurant/', {
           params: {
             longitude: 120.207372,
             latitude: 30.26409,
@@ -123,7 +119,13 @@
     },
     created: function () {
       var self = this;
-      axios.get('static/restaurant.json', {
+      axios.get('/weather/',{params:{
+         longitude: 120.207372,
+         latitude: 30.26409,
+      }}).then(function(response){
+        self.weather = response.data;
+      });
+      axios.get('/restaurant/', {
         params: {
           longitude: 120.207372,
           latitude: 30.26409,

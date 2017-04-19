@@ -79,14 +79,20 @@
     },
     methods: {
       getScore() {
-        return axios.get('static/score.json');
+        var self= this;
+        return axios.get('/rating/score/',{params:{
+          restaurant_id:self.$route.params.id
+        }});
       },
       getRatingCount() {
-        return axios.get('static/ratingcount.json');
+        var self= this;
+        return axios.get('/rating/ratingcount',{params:{
+          restaurant_id:self.$route.params.id
+        }});
       },
       getRating() {
         var self = this;
-        return axios.get('static/rating.json', {
+        return axios.get('/rating/', {
           params: {
             restaurant_id: self.$route.params.id,
             offset: 0,
@@ -96,7 +102,7 @@
       },
       loadData(){
         let self = this;
-        axios.get('static/rating.json', {
+        axios.get('/rating/', {
           params: {
             restaurant_id: self.$route.params.id,
             offset: this.offset*10,
@@ -119,6 +125,7 @@
     bottom: 0;
     background: #f3f5f7;
     overflow: hidden;
+    width: 100%;
   }
 
   .top-score {

@@ -107,7 +107,9 @@
     },
     created() {
       let self = this;
-      axios.get('static/menu.json').then(function (response) {
+      axios.get('/menu/',{params:{
+        restaurant_id:this.$route.params.id
+      }}).then(function (response) {
         self.goods = response.data.content;
         self.$nextTick(function () {
           self._initScroll();

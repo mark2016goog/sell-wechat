@@ -33,13 +33,13 @@
   import BScroll from 'better-scroll';
   import cartcontrol from '../shop/cartcontrol'
   import router from '../../router'
+  import axios from 'axios'
 
   export default {
     name: 'shopcart',
     data() {
       return {
         fold: true,
-        is_login:true,
       }
     },
     props: {
@@ -69,16 +69,19 @@
         this.fold = true;
       },
       settlement: function (e) {
+        var self= this;
         if (this.total_price >= this.restaurant_info.minimum_order_amount) {
           e.stopPropagation();
-          localStorage.setItem(this.restaurant_id,JSON.stringify(this.selectFoods));
-          if(!this.is_login){
-            router.push('/user/loginphonenumber');
-          }
-          else{
-            router.push('/comfirmorder/'+this.restaurant_id);
-          }
-          
+          localStorage.setItem(this.restaurant_id, JSON.stringify(this.selectFoods));
+          axios.get('/logininfo/').then(function (response) {
+            if (response.data.success == 0) {
+              router.push('/comfirmorder/' + self.restaurant_id);
+            } else if (response.data.success == -1) {
+              router.push('/user/loginphonenumber');
+            }
+          }).catch(function (e) {
+            console.log(e);
+          })
         }
       }
     },
@@ -94,7 +97,7 @@
         this.selectFoods.forEach((food) => {
           total += food.price * food.count;
         });
-        return total;
+        return total.toFixed(2);
       },
       total_count() {
         let count = 0;

@@ -114,6 +114,14 @@
       },
       submitOrder:function(){
         router.push('/payonline/'+this.$route.params.id);
+      },
+      caculateTime(){
+        if((Number.parseInt(new Date().getMinutes())) < 30){
+          return (new Date().getHours() < 10 ? ('0'+new Date().getHours()):new Date().getHours()) + ':'+ (Number.parseInt(new Date().getMinutes()) + 30);
+        }
+        else{
+          return (new Date().getHours()+1 < 10 ? ('0'+new Date().getHours()+1):(new Date().getHours()+1)) + ':'+ ((Number.parseInt(new Date().getMinutes()) -30) %60);
+        }
       }
     },
     computed:{
@@ -127,13 +135,13 @@
             sum+=food.count*food.price;
           }
          });
-         return sum+this.restaurant_info.delivery_fee + 4;
+         return (sum+this.restaurant_info.delivery_fee + 4).toFixed(2);
       }
     },
     created:function(){
       let restaurant_id = this.$route.params.id;
       this.$store.commit('setId',restaurant_id);
-      this.time = (new Date().getHours() < 10 ? ('0'+new Date().getHours()):new Date().getHours()) + ':'+ (Number.parseInt(new Date().getMinutes()) + 30);
+      this.time = this.caculateTime();
       this.order = JSON.parse(localStorage.getItem(restaurant_id));
     }
   }
@@ -291,6 +299,9 @@
   }
 
   .order-detail .order-food-list .order-food-list-item .food-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     flex: 1;
   }
 

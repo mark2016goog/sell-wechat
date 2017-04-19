@@ -21,6 +21,8 @@
 <script>
   import topbar from '../header/header-top-bar'
   import router from '../../router'
+  import qs from 'qs'
+  import axios from 'axios'
 
   export default {
     name: 'loginphonenumber',
@@ -87,7 +89,20 @@
         }
       },
       login:function(){
-        
+        let phonenuber = this.phonenumber;
+        let code  = this.code;
+        let data = qs.stringify({
+          phonenumber:phonenuber,
+          code:code
+        });
+        axios.post('/user/signinphonenumber',data).then(function(response){
+          if(response.data.success == 0){
+            console.log(response.data);
+          }
+          else{
+            console.log(response.data);
+          }
+        });
       },
       goPasswordModel:function(){
         router.push('/user/loginpassword');

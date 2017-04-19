@@ -26,6 +26,9 @@ export default {
     'v-topbar': HeaderTopBar,
     'order-list-item': OrderListItem,
     'v-footer':Footer
+  },
+  created:function(){
+    
   }
 };
 </script>

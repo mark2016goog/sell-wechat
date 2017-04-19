@@ -82,6 +82,7 @@
     bottom: 0;
     background: #f3f5f7;
     overflow: hidden;
+    width: 100%;
   }
 
   .seller .seller-top {
