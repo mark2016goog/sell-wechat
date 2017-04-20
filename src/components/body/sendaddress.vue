@@ -2,31 +2,37 @@
   <div class="sendaddress">
     <v-topbar :title="topbar.title" :is_arrow_show="topbar.is_arrow_show" @back="topBack"></v-topbar>
     <div class="sendaddress-content">
-      <div class="no-address" v-if="sendaddress.length == 0">
-        <div class="text">没有收货地址</div>
-        <div class="tip">点击下方按钮新增</div>
+      <div class="login-content" v-if="!is_login">
+        <div class="no-address" v-if="empty">
+          <div class="text">没有收货地址</div>
+          <div class="tip">点击下方按钮新增</div>
+        </div>
+        <ul class="address-list" v-else>
+          <li class="address-list-item" @click="select" v-for="(item,index) in sendaddress">
+            <div class="radio">
+              <span class="iconfont icon-radio"></span>
+            </div>
+            <div class="address-content">
+              <div class="top">
+                <span class="name">{{item.name}}</span>
+                <span class="sex">{{item.sex}}</span>
+                <span class="phonenumber">{{item.phonenumber}}</span>
+              </div>
+              <div class="bottom">
+                <span class="label">{{item.label}}</span>{{item.address}}-{{item.detail_address}}
+              </div>
+              <span class="iconfont icon-bi" @click.stop="modify(index)"></span>
+            </div>
+          </li>
+        </ul>
+        <div class="bottom-content" @click="addAddress">
+          <span class="iconfont icon-jia"></span>新增地址
+        </div>
       </div>
-      <ul class="address-list" v-else>
-        <li class="address-list-item" @click="select" v-for="(item,index) in sendaddress">
-          <div class="radio">
-            <span class="iconfont icon-radio"></span>
-          </div>
-          <div class="address-content">
-            <div class="top">
-              <span class="name">{{item.name}}</span>
-              <span class="sex">{{item.sex}}</span>
-              <span class="phonenumber">{{item.phonenumber}}</span>
-            </div>
-            <div class="bottom">
-              <span class="label">{{item.label}}</span>{{item.address}}-{{item.detail_address}}
-            </div>
-            <span class="iconfont icon-bi" @click.stop="modify(index)"></span>
-          </div>
-        </li>
-      </ul>
-    </div>
-    <div class="bottom-content" @click="addAddress" v-if="is_login">
-      <span class="iconfont icon-jia"></span>新增地址
+      <div class="loginout-content" v-else>
+        <div class="text">登录后查看外卖订单</div>
+        <div class="login-now" @click="login">立即登录</div>
+      </div>
     </div>
   </div>
 </template>
@@ -35,7 +41,7 @@
   import topbar from '../header/header-top-bar'
   import bus from '../../bus';
   import axios from 'axios';
-  import qs from 'qs' 
+  import qs from 'qs'
   // {
   //   name: '王迪',
   //   sex: '先生',
@@ -54,7 +60,8 @@
           is_arrow_show: true
         },
         sendaddress: [],
-        is_login:false,
+        is_login: true,
+        empty: true,
       }
     },
     methods: {
@@ -73,17 +80,20 @@
           detail_address: this.sendaddress[index].detail_address,
           door_number: this.sendaddress[index].door_number,
           label: this.sendaddress[index].label,
-          _id:this.sendaddress[index]._id,
-          user_phonenumber:'18996231872'
+          _id: this.sendaddress[index]._id,
+          user_phonenumber: '18996231872'
         }
-        sessionStorage.setItem('current_address',JSON.stringify(data));
+        sessionStorage.setItem('current_address', JSON.stringify(data));
         router.push('/addaddress');
       },
       select: function () {
         // router.push('/comfirmorder');
       },
-      addAddress:function(){
+      addAddress: function () {
         router.push('/addaddress');
+      },
+      login:function(){
+        router.push('/user/loginphonenumber');
       }
     },
     components: {
@@ -96,12 +106,13 @@
           phonenumber: '18996231872'
         }
       }).then(function (response) {
-        if(response.data.success == 0){
+        if (response.data.success == 0) {
           self.sendaddress = response.data.data;
-          self.is_login = true;
-        }
-        else if(response.data.success == -1){
-          router.push('/user/loginphonenumber');
+          self.empty = false;
+        } else if (response.data.success == -1) {
+          self.empty = true;
+        } else if (response.data.success == -2) {
+          self.is_login = false;
         }
       });
     }
@@ -109,7 +120,7 @@
 
 </script>
 
-<style>
+<style scoped>
   .sendaddress {
     height: 100%;
   }
@@ -217,6 +228,31 @@
     padding: 0 5px;
     margin-right: 10px;
     border-radius: 2px;
+  }
+
+  .loginout-content {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    width: 100%;
+  }
+
+  .loginout-content .text {
+    color: #6a6a6a;
+    font-weight: 400;
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  .loginout-content .login-now {
+    display: inline-block;
+    width: 100px;
+    background-color: #56d176;
+    font-size: 18px;
+    padding: 10px 20px;
+    color: #fff;
+    border-radius: 3px;
   }
 
 </style>
