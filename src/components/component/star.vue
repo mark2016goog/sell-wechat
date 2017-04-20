@@ -52,15 +52,15 @@
     margin-right: 0;
   }
   .star-48 .star-item.on{
-    background: url('../../common/images/star24_on@2x.png') no-repeat center center;
+    background: url('/static/images/star24_on@2x.png') no-repeat center center;
     background-size: 20px 20px;
   }
   .star-48 .star-item.half{
-    background: url('../../common/images/star24_half@2x.png') no-repeat center center;
+    background: url('/static/images/star24_half@2x.png') no-repeat center center;
     background-size: 20px 20px;
   }
   .star-48 .star-item.off{
-    background: url('../../common/images/star24_off@2x.png') no-repeat center center;
+    background: url('/static/images/star24_off@2x.png') no-repeat center center;
     background-size: 20px 20px;
   }
   .star-36 .star-item{
@@ -74,15 +74,15 @@
     margin-right: 0;
   }
   .star-36 .star-item.on{
-    background: url('../../common/images/star24_on@2x.png') no-repeat center center;
+    background: url('/static/images/star24_on@2x.png') no-repeat center center;
     background-size: 15px 15px;
   }
   .star-36 .star-item.half{
-    background: url('../../common/images/star24_half@2x.png') no-repeat center center;
+    background: url('/static/images/star24_half@2x.png') no-repeat center center;
     background-size: 15px 15px;
   }
   .star-36 .star-item.off{
-    background: url('../../common/images/star24_off@2x.png') no-repeat center center;
+    background: url('/static/images/star24_off@2x.png') no-repeat center center;
     background-size: 15px 15px;
   }
   .star-24 .star-item{
@@ -95,15 +95,15 @@
     margin-right: 0;
   }
   .star-24 .star-item.on{
-    background: url('../../common/images/star24_on@2x.png') no-repeat center center;
+    background: url('/static/images/star24_on@2x.png') no-repeat center center;
     background-size: 10px 10px;
   }
   .star-24 .star-item.half{
-    background: url('../../common/images/star24_half@2x.png') no-repeat center center;
+    background: url('/static/images/star24_half@2x.png') no-repeat center center;
     background-size: 10px 10px;
   }
   .star-24 .star-item.off{
-    background: url('../../common/images/star24_off@2x.png') no-repeat center center;
+    background: url('/static/images/star24_off@2x.png') no-repeat center center;
     background-size: 10px 10px;
   }
 </style>

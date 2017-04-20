@@ -15,28 +15,28 @@
           <div class="nav-bar">
             <ul class="nav-bar-list">
               <li class="nav-bar-list-item">
-                <img src="../../common/images/meishi.png" alt="美食图片" class="item-pic"> 美食
+                <img src="/static/images/meishi.png" alt="美食图片" class="item-pic"> 美食
               </li>
               <li class="nav-bar-list-item">
-                <img src="../../common/images/meishi.png" alt="美食图片" class="item-pic"> 超市
+                <img src="/static/images/meishi.png" alt="美食图片" class="item-pic"> 超市
               </li>
               <li class="nav-bar-list-item">
-                <img src="../../common/images/meishi.png" alt="美食图片" class="item-pic"> 鲜果购
+                <img src="/static/images/meishi.png" alt="美食图片" class="item-pic"> 鲜果购
               </li>
               <li class="nav-bar-list-item">
-                <img src="../../common/images/meishi.png" alt="美食图片" class="item-pic"> 甜点饮品
+                <img src="/static/images/meishi.png" alt="美食图片" class="item-pic"> 甜点饮品
               </li>
               <li class="nav-bar-list-item">
-                <img src="../../common/images/meishi.png" alt="美食图片" class="item-pic"> 正餐优选
+                <img src="/static/images/meishi.png" alt="美食图片" class="item-pic"> 正餐优选
               </li>
               <li class="nav-bar-list-item">
-                <img src="../../common/images/meishi.png" alt="美食图片" class="item-pic"> 小迪专送
+                <img src="/static/images/meishi.png" alt="美食图片" class="item-pic"> 小迪专送
               </li>
               <li class="nav-bar-list-item">
-                <img src="../../common/images/meishi.png" alt="美食图片" class="item-pic"> 能量西餐
+                <img src="/static/images/meishi.png" alt="美食图片" class="item-pic"> 能量西餐
               </li>
               <li class="nav-bar-list-item">
-                <img src="../../common/images/meishi.png" alt="美食图片" class="item-pic"> 精选小吃
+                <img src="/static/images/meishi.png" alt="美食图片" class="item-pic"> 精选小吃
               </li>
             </ul>
           </div>

@@ -18,6 +18,8 @@
 <script>
   import topbar from '../header/header-top-bar'
   import router from '../../router'
+  import axios from 'axios'
+  import qs from 'qs'
 
   export default {
     name: 'loginphonenumber',
@@ -40,7 +42,23 @@
         router.go(-1)
       },
       login:function(){
-        
+        let phonenumber = this.phonenumber;
+        let password  = this.password;
+        let data = qs.stringify({
+          phonenumber:phonenumber,
+          password:password
+        });
+        axios.post('/user/signinpassword',data).then(function(response){
+          if(response.data.success == 0){
+            router.go(-2);
+          }
+          else if(response.data.success == -2){
+            router.replace('/user/loginphonenumber');
+          }
+          else{
+            alert('账号或密码错误');
+          }
+        });
       },
       toggleType:function(){
         this.is_show_password =!this.is_show_password;

@@ -4,7 +4,7 @@
     <div class="account-content">
       <div class="person-icon">
         <span class="title">头像</span>
-        <img src="../../common/images/user-icon.jpg" alt="头像">
+        <img src="/static/images/user-icon.jpg" alt="头像">
       </div>
       <div class="username">
         <span class="title">用户名</span>

@@ -1,7 +1,7 @@
 <template>
   <div class="evaluateitem">
     <div class="left-content">
-      <img :src="evaluate.content.avatar" alt="">
+      <img :src="image_path" alt="">
     </div>
     <div class="right-content">
       <div class="top-content">
@@ -28,6 +28,11 @@
     },
     props:{
       evaluate:Object
+    },
+    computed:{
+      image_path(){
+        return this.evaluate.content.avatar || '/static/images/default_icon.png';
+      }
     }
   }
 

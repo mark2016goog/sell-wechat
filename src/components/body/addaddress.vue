@@ -40,7 +40,7 @@
           <label
             for="company" :class="{active:address.label =='公司'}">公司</label><input type="radio" value="公司" v-model="address.label" id="company"><label for="school" :class="{active:address.label =='学校'}">学校</label>
             <input
-              type="radio"  v-model="address.label" id="school">
+              type="radio" value="学校"  v-model="address.label" id="school">
         </div>
       </div>
       <div style="width:100%;padding:0 10px;box-sizing:border-box;margin-top:10px;">

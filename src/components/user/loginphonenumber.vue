@@ -89,23 +89,23 @@
         }
       },
       login:function(){
-        let phonenuber = this.phonenumber;
+        let phonenumber = this.phonenumber;
         let code  = this.code;
         let data = qs.stringify({
-          phonenumber:phonenuber,
+          phonenumber:phonenumber,
           code:code
         });
         axios.post('/user/signinphonenumber',data).then(function(response){
           if(response.data.success == 0){
-            console.log(response.data);
+            router.go(-1);
           }
           else{
-            console.log(response.data);
+            alert('失败');
           }
         });
       },
       goPasswordModel:function(){
-        router.push('/user/loginpassword');
+        router.replace('/user/loginpassword');
       }
     }
   }

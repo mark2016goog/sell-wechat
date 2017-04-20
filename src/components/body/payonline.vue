@@ -61,6 +61,8 @@
 <script>
   import router from '../../router'
   import topbar from '../header/header-top-bar'
+  import axios from 'axios'
+  import qs from 'qs'
 
   export default {
     name: 'payonline',
@@ -72,8 +74,8 @@
         },
         show_more_method: false,
         method: 'zhifubao',
-        order:[],
-        time:'15:00'
+        order: [],
+        time: '15:00'
       }
     },
     methods: {
@@ -92,32 +94,35 @@
       yinlian: function () {
         this.method = "yinlian";
       },
-      comfirmPay(){
-        switch(this.method){
+      comfirmPay() {
+        switch (this.method) {
           case 'zhifubao':
-             alert('使用支付宝支付');
-             break;
+            alert('使用支付宝支付');
+            break;
           case 'weixin':
-             alert('使用微信支付');
-             break;
+            alert('使用微信支付');
+            break;
           case 'yinlian':
-             alert('使用银联支付');
-             break;
+            alert('使用银联支付');
+            break;
         }
-        let good_list = [];
-        this.order.forEach(function(food){
-          good_list.push({
-            name:food.name,
-            count:food.count,
-            price:food.price
-          });
-        })
-        var data = {
-          shop_name:this.restaurant_info.name,
-          status:1,
-          time:new Date(),
-          good_list:good_list
-        }
+        let data = qs.stringify({
+          restaurant_id:this.$route.params.id,
+          restaurant_image_path:this.restaurant_info.image_path,
+          shop_name: this.restaurant_info.name,
+          status: 1,
+          good_list: JSON.stringify(this.order),
+          user_phonenumber: '18996231874'
+        });
+        axios.post('/comfirmorder/', data).then(function (response) {
+          if (response.data.success == 0) {
+            router.push('/order');
+          } else if (response.data.success == -1) {
+            alert('订单提交失败');
+          } else {
+            alert('数据库异常');
+          }
+        });
       }
     },
     computed: {
@@ -131,7 +136,7 @@
             sum += food.count * food.price;
           }
         });
-        return sum + this.restaurant_info.delivery_fee + 4;
+        return (sum + this.restaurant_info.delivery_fee + 4).toFixed(2);
       }
     },
     components: {

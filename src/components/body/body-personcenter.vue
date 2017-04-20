@@ -3,11 +3,11 @@
     <v-topbar :title = "topbar.title"></v-topbar>
     <div class="account">
       <div class="person-icon">
-        <img src="../../common/images/user-icon.jpg" alt="">
+        <img :src="person_icon" alt="">
       </div>
       <div class="login-box" @click="login">
-          <div class="login-signin">登录/注册</div>
-          <div class="login-description">登录后享受更多特权</div>
+          <div class="login-signin">{{user_info.name || '登录/注册'}}</div>
+          <div class="login-description">{{phonenumber || '登录后享受更多特权'}}</div>
       </div>
     </div>
     <div class="person-info">
@@ -17,11 +17,11 @@
     </div>
     <div class="container">
       <ul class="details">
-        <li class="details-item" @click="manageAddress"><i class="iconfont icon-dizhi" style="color:rgb(0,150,255);"></i>收货地址管理<i class="iconfont icon-arrow"></i></li>
-         <li class="details-item"><i class="iconfont icon-daijinquan" style="color: rgb(255, 153, 0);"></i>商家代金券<i class="iconfont icon-arrow"></i></li>
-          <li class="details-item"><i class="iconfont icon-yijianfankui" style="color: rgb(0, 255, 222);"></i>意见反馈<i class="iconfont icon-arrow"></i></li>
+        <li class="details-item" @click="manageAddress" v-if="is_login"><i class="iconfont icon-dizhi" style="color:rgb(0,150,255);" ></i>收货地址管理<i class="iconfont icon-arrow"></i></li>
+         <li class="details-item"v-if="is_login"><i class="iconfont icon-daijinquan" style="color: rgb(255, 153, 0);" ></i>商家代金券<i class="iconfont icon-arrow"></i></li>
+          <li class="details-item"><i class="iconfont icon-yijianfankui" style="color: rgb(0, 255, 222);" ></i>意见反馈<i class="iconfont icon-arrow"></i></li>
            <li class="details-item"><i class="iconfont icon-changjianwenti" style="color:rgb(255, 0, 0);"></i>常见问题<i class="iconfont icon-arrow"></i></li>
-            <li class="details-item"><i class="iconfont icon-kefudianhua" style="color: rgb(0, 150, 255);"></i>客服电话<i class="iconfont icon-arrow"></i></li>   
+            <li class="details-item"  v-if="is_login"><i class="iconfont icon-kefudianhua" style="color: rgb(0, 150, 255);"></i>客服电话<i class="iconfont icon-arrow"></i></li>   
       </ul>
     </div>
     <v-footer></v-footer>
@@ -32,6 +32,7 @@
 import HeaderTopBar from '../header/header-top-bar';
 import Footer from '../footer/index-footer';
 import router from '../../router'
+import axios from 'axios'
 export default {
   name: 'personcenter',
   data () {
@@ -39,13 +40,18 @@ export default {
       topbar:{
         title:'个人中心',
       },
-      username: 'rzn937789897'
+      user_info:{},
+      is_login:false
     };
   },
   methods:{
     login:function(){
-      // router.push('/user/loginphonenumber');
-      router.push('/user/accountsetting');
+      if(this.is_login){
+        router.push('/user/accountsetting');
+      }
+      else{
+        router.push('/user/loginphonenumber');
+      }
     },
     manageAddress:function(){
       router.push('/sendaddress');
@@ -56,13 +62,35 @@ export default {
     'v-footer':Footer
   },
   created:function(){
-    
+    var self= this;
+    axios.get('/user/userinfo').then(function(response){
+      if(response.data.success == 0){
+        self.user_info = response.data.data;
+        self.is_login = true;
+      }
+      else if(response.data.success == -1){
+        self.is_login =  false;
+      }
+    })
+  },
+  computed:{
+    person_icon(){
+      return this.user_info.avatar || "http://xiaodiwaimai.oss-cn-shenzhen.aliyuncs.com/default_person_icon.png"
+    },
+    phonenumber(){
+      if(this.user_info.phonenumber){
+        return this.user_info.phonenumber.substr(0,3) + '****' + this.user_info.phonenumber.substr(7,4);
+      }
+      else{
+        return '';
+      }
+    }
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style scoped>
   .personcenter {
     width: 100%;
     background: #f4f4f4;

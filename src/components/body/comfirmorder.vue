@@ -7,17 +7,17 @@
     <div class="comfirmorder-content">
       <div class="select-address" @click="selectAddress">
         <span class="iconfont icon-dizhi"></span>
-        <div class="content">请选择一个收货地址</div>
-        <!--<div class="address-content">
+        <div class="content" v-if="!send_address.name">请选择一个收货地址</div>
+        <div class="address-content" v-else>
           <div class="top">
-            <span class="name">王迪</span>
-            <span class="sex">先生</span>
-            <span class="phonenumber">18996231872</span>
+            <span class="name">{{send_address.name}}</span>
+            <span class="sex">{{send_address.sex}}</span>
+            <span class="phonenumber">{{send_address.phonenumber}}</span>
           </div>
           <div class="bottom">
-            <span class="label">公司</span>西溪北苑北区-北区五常街道文昌路于荆长大道口于荆长大道口于荆长大道口于荆长大道口
+            <span class="label">{{send_address.label}}</span>{{send_address.address}}-{{send_address.detail_address}}
           </div>
-        </div>-->
+        </div>
         <span class="iconfont icon-arrow"></span>
       </div>
       <div class="send-time">
@@ -98,7 +98,8 @@
           is_arrow_show: true,
           time:'',
           total_price:'',
-          order:[]
+          order:[],
+          send_address:{}
         }
       }
     },
@@ -143,6 +144,8 @@
       this.$store.commit('setId',restaurant_id);
       this.time = this.caculateTime();
       this.order = JSON.parse(localStorage.getItem(restaurant_id));
+      this.send_address = JSON.parse(sessionStorage.getItem('selectAddress')) || {};
+      console.log(this.send_address);
     }
   }
 
@@ -294,7 +297,7 @@
   }
 
   .order-detail .order-food-list .order-food-list-item .food-total-price {
-    flex: 0 0 50px;
+    flex: 0 0 70px;
     text-align: right;
   }
 

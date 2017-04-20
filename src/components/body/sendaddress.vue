@@ -2,37 +2,32 @@
   <div class="sendaddress">
     <v-topbar :title="topbar.title" :is_arrow_show="topbar.is_arrow_show" @back="topBack"></v-topbar>
     <div class="sendaddress-content">
-      <div class="login-content" v-if="!is_login">
-        <div class="no-address" v-if="empty">
-          <div class="text">没有收货地址</div>
-          <div class="tip">点击下方按钮新增</div>
-        </div>
-        <ul class="address-list" v-else>
-          <li class="address-list-item" @click="select" v-for="(item,index) in sendaddress">
-            <div class="radio">
-              <span class="iconfont icon-radio"></span>
-            </div>
-            <div class="address-content">
-              <div class="top">
-                <span class="name">{{item.name}}</span>
-                <span class="sex">{{item.sex}}</span>
-                <span class="phonenumber">{{item.phonenumber}}</span>
-              </div>
-              <div class="bottom">
-                <span class="label">{{item.label}}</span>{{item.address}}-{{item.detail_address}}
-              </div>
-              <span class="iconfont icon-bi" @click.stop="modify(index)"></span>
-            </div>
-          </li>
-        </ul>
-        <div class="bottom-content" @click="addAddress">
-          <span class="iconfont icon-jia"></span>新增地址
-        </div>
+      <div class="no-address" v-if="empty">
+        <div class="text">没有收货地址</div>
+        <div class="tip">点击下方按钮新增</div>
       </div>
-      <div class="loginout-content" v-else>
-        <div class="text">登录后查看外卖订单</div>
-        <div class="login-now" @click="login">立即登录</div>
+      <ul class="address-list" v-else>
+        <li class="address-list-item" @click="select(item)" v-for="(item,index) in sendaddress">
+          <!--<div class="radio">
+            <span class="iconfont icon-radio"></span>
+          </div>-->
+          <div class="address-content">
+            <div class="top">
+              <span class="name">{{item.name}}</span>
+              <span class="sex">{{item.sex}}</span>
+              <span class="phonenumber">{{item.phonenumber}}</span>
+            </div>
+            <div class="bottom">
+              <span class="label">{{item.label}}</span>{{item.address}}-{{item.detail_address}}
+            </div>
+            <span class="iconfont icon-bi" @click.stop="modify(index)"></span>
+          </div>
+        </li>
+      </ul>
+      <div class="bottom-content" @click="addAddress">
+        <span class="iconfont icon-jia"></span>新增地址
       </div>
+
     </div>
   </div>
 </template>
@@ -62,6 +57,8 @@
         sendaddress: [],
         is_login: true,
         empty: true,
+        is_click:false,
+        restaurant_id:''
       }
     },
     methods: {
@@ -86,21 +83,40 @@
         sessionStorage.setItem('current_address', JSON.stringify(data));
         router.push('/addaddress');
       },
-      select: function () {
-        // router.push('/comfirmorder');
+      select: function (item) {
+        if(this.is_click){
+          router.push('/comfirmorder/'+this.restaurant_id);
+          sessionStorage.setItem('selectAddress',JSON.stringify(item));
+        }
       },
       addAddress: function () {
         router.push('/addaddress');
-      },
-      login:function(){
-        router.push('/user/loginphonenumber');
       }
+    },
+    beforeRouteEnter(to,from,next){
+        if(from.path.indexOf('comfirmorder') > -1){
+          sessionStorage.setItem('sign',1);
+          next((vm)=>{
+            vm.restaurant_id = from.path.split('/')[from.path.split('/').length-1]
+          })
+        }
+        else if(from.path.indexOf('personcenter') > -1){
+          sessionStorage.setItem('sign',2);
+          next();
+        }
+        next();
     },
     components: {
       'v-topbar': topbar
     },
     created: function () {
       var self = this;
+      if(sessionStorage.getItem('sign') == 1){
+        this.is_click = true;
+      }
+      else{
+        this.is_click = false;
+      }
       axios.get('/user/getaddress/', {
         params: {
           phonenumber: '18996231872'
@@ -228,31 +244,6 @@
     padding: 0 5px;
     margin-right: 10px;
     border-radius: 2px;
-  }
-
-  .loginout-content {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    text-align: center;
-    width: 100%;
-  }
-
-  .loginout-content .text {
-    color: #6a6a6a;
-    font-weight: 400;
-    font-size: 18px;
-    margin-bottom: 20px;
-  }
-
-  .loginout-content .login-now {
-    display: inline-block;
-    width: 100px;
-    background-color: #56d176;
-    font-size: 18px;
-    padding: 10px 20px;
-    color: #fff;
-    border-radius: 3px;
   }
 
 </style>

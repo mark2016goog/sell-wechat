@@ -185,7 +185,7 @@
     display: inline-block;
     width: 30px;
     vertical-align: top;
-    background: url('../../common/images/brand@2x.png') no-repeat center center;
+    background: url('/static/images/brand@2x.png') no-repeat center center;
     background-size: 30px 18px;
     margin-right: 6px;
   }
@@ -226,7 +226,7 @@
     display: inline-block;
     height: 28px;
     width: 22px;
-    background: url('../../common/images/bulletin@2x.png') no-repeat center center;
+    background: url('/static/images/bulletin@2x.png') no-repeat center center;
     background-size: 22px 12px;
     vertical-align: top;
     margin-right: 4px;
