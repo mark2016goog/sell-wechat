@@ -13,30 +13,30 @@
             <div class="search-box" @click="search"><input type="text" placeholder="搜索商家、商品" readonly></div>
           </div>
           <div class="nav-bar">
-            <ul class="nav-bar-list">
-              <li class="nav-bar-list-item">
-                <img src="/static/images/meishi.png" alt="美食图片" class="item-pic"> 美食
+            <ul class="nav-bar-list" @click="topbannerpage">
+              <li class="nav-bar-list-item" v-lazy:background-image="'/static/images/meishi.jpeg'">
+                 美食
               </li>
-              <li class="nav-bar-list-item">
-                <img src="/static/images/meishi.png" alt="美食图片" class="item-pic"> 超市
+              <li class="nav-bar-list-item" v-lazy:background-image="'/static/images/chaoshi.jpeg'">
+                超市
               </li>
-              <li class="nav-bar-list-item">
-                <img src="/static/images/meishi.png" alt="美食图片" class="item-pic"> 鲜果购
+              <li class="nav-bar-list-item" v-lazy:background-image="'/static/images/shuiguo.jpeg'">
+                鲜果购
               </li>
-              <li class="nav-bar-list-item">
-                <img src="/static/images/meishi.png" alt="美食图片" class="item-pic"> 甜点饮品
+              <li class="nav-bar-list-item" v-lazy:background-image="'/static/images/tianpin.jpeg'">
+                甜点饮品
               </li>
-              <li class="nav-bar-list-item">
-                <img src="/static/images/meishi.png" alt="美食图片" class="item-pic"> 正餐优选
+              <li class="nav-bar-list-item" v-lazy:background-image="'/static/images/hanbao.jpeg'">
+              汉堡
               </li>
-              <li class="nav-bar-list-item">
-                <img src="/static/images/meishi.png" alt="美食图片" class="item-pic"> 小迪专送
+              <li class="nav-bar-list-item" v-lazy:background-image="'/static/images/xindian.jpeg'">
+                新店
               </li>
-              <li class="nav-bar-list-item">
-                <img src="/static/images/meishi.png" alt="美食图片" class="item-pic"> 能量西餐
+              <li class="nav-bar-list-item" v-lazy:background-image="'/static/images/zhunshi.jpeg'">
+               准时达
               </li>
-              <li class="nav-bar-list-item">
-                <img src="/static/images/meishi.png" alt="美食图片" class="item-pic"> 精选小吃
+              <li class="nav-bar-list-item" v-lazy:background-image="'/static/images/malatang.jpeg'">
+                麻辣烫
               </li>
             </ul>
           </div>
@@ -64,6 +64,7 @@
   import Footer from '../footer/index-footer';
   import BScroll from 'better-scroll'
   import axios from 'axios'
+  import bus from '../../bus'
 
   export default {
     name: 'index',
@@ -105,6 +106,10 @@
             self.has_data = false;
           }
         });
+      },
+      topbannerpage:function(e){
+        bus.$emit('topSearch',e.target.innerText);
+        router.push('/topbannerpage');
       }
     },
     computed:{
@@ -257,13 +262,10 @@
     height: 80px;
     overflow: hidden;
     text-align: center;
-  }
-
-  .nav-bar-list-item .item-pic {
-    display: block;
-    width: 40px;
-    height: 40px;
-    margin: 10px auto;
+    background-position:center 10px;
+    background-repeat: no-repeat;
+    background-size:40px 40px;
+    padding-top:60px;
   }
 
   .content {

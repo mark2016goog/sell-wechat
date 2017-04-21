@@ -18,7 +18,7 @@
           <ul class="good-list">
             <li class="good-list-item" v-for="item in order.good_list">
               <div class="text">{{item.name}}</div>
-              <div class="price">￥{{(item.count * item.price).toFixed(2)}}</div></div>
+              <div class="price">￥{{(item.count * item.price).toFixed(2)}}</div>
             </li>
           </ul>
         </div>
@@ -55,14 +55,14 @@
           case -1:
             return '已取消';
         }
+      },
+      order_time(){
+        return moment(this.order.meta.createAt).format('YYYY-MM-DD');
       }
     },
     methods:{
       againOne:function(){
         router.push('/shoppage/' + this.order.restaurant_id + '/goods');
-      },
-      order_time(){
-        return moment(order.meta.createAt).format('YYYY-MM-DD');
       }
     }
   };

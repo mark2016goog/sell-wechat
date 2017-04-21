@@ -96,6 +96,10 @@ export default new Router({
     {
       path:'/search',
       component:resolve => require(['../components/body/search.vue'], resolve)
+    },
+    {
+      path:'/topbannerpage',
+      component:resolve => require(['../components/body/topbannerpage'], resolve)
     }
   ]
 })

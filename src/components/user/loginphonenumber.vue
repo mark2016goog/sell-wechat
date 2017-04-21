@@ -61,9 +61,8 @@
         var self = this;
         if (this.code_btn_can_click) {
           if (this.checkPhoneNumber()) {
-            axios.post('/user/sendcode', {
-              phonenumber: this.phonemumber
-            }).then(function (response) {
+            let data = qs.stringify({phonenumber: this.phonenumber});
+            axios.post('/user/sendcode', data).then(function (response) {
               if (response.data.success == 0) {
                 var count = 60;
                 self.code_btn_can_click = false;
