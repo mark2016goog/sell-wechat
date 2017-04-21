@@ -8,7 +8,7 @@
         <div class="top-content">
           <div class="shop-name">
             {{order.shop_name}}<span class="iconfont icon-arrow"></span>
-            <div class="time">{{order.meta.createAt}}</div>
+            <div class="time">{{order_time}}</div>
           </div>
           <div class="order-status">
             {{status_text}}
@@ -34,6 +34,8 @@
 
 <script>
   import router from '../../router'
+  import moment from 'moment'
+  
   export default {
     name: 'order-list-item',
     data() {
@@ -50,16 +52,17 @@
         switch(this.order.status){
           case 1:
             return '正在配送中';
-            break;
           case -1:
             return '已取消';
-            break;
         }
       }
     },
     methods:{
       againOne:function(){
         router.push('/shoppage/' + this.order.restaurant_id + '/goods');
+      },
+      order_time(){
+        return moment(order.meta.createAt).format('YYYY-MM-DD');
       }
     }
   };

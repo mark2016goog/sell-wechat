@@ -77,9 +77,6 @@
           router.push('/comfirmorder/'+this.restaurant_id);
           sessionStorage.setItem('selectAddress',JSON.stringify(item));
         }
-      },
-      addAddress: function () {
-        router.push('/addaddress');
       }
     },
     beforeRouteEnter(to,from,next){

@@ -12,7 +12,7 @@
       <div class="tip">
         温馨提示:未注册小迪外卖账号的手机，登录时将自动注且，代表您已同意<a @click="userService" class="user-service">《用户服务协议》</a>
       </div>
-      <div style="width:100%;padding:0 10px;box-sizing:border-box;"> 
+      <div style="width:100%;padding:0 10px;box-sizing:border-box;">
         <button type="button" class="login-btn" @click="login">登录</button>
       </div>
     </div>
@@ -31,12 +31,12 @@
         topbar: {
           title: '手机登录',
           is_arrow_show: true,
-          right_text:'密码登录'
+          right_text: '密码登录'
         },
         phonenumber: '',
         code: '',
         code_text: '发送验证码',
-        code_btn_can_click:false
+        code_btn_can_click: false
       };
     },
     components: {
@@ -58,27 +58,37 @@
         }
       },
       sendCode: function () {
+        var self = this;
         if (this.code_btn_can_click) {
           if (this.checkPhoneNumber()) {
-            var self = this;
-            var count = 60;
-            this.code_btn_can_click = false;
-            this.code_text = '已发送（' + count + 's）';
-            let timer = setInterval(function(){
-              count--;
-              self.code_text = '已发送（' + count + 's）';
-              if(count == 0){
-                clearInterval(timer);
-                self.code_text = '重新发送';
-                self.code_btn_can_click = true;
+            axios.post('/user/sendcode', {
+              phonenumber: this.phonemumber
+            }).then(function (response) {
+              if (response.data.success == 0) {
+                var count = 60;
+                self.code_btn_can_click = false;
+                self.code_text = '已发送（' + count + 's）';
+                let timer = setInterval(function () {
+                  count--;
+                  self.code_text = '已发送（' + count + 's）';
+                  if (count == 0) {
+                    clearInterval(timer);
+                    self.code_text = '重新发送';
+                    self.code_btn_can_click = true;
+                  }
+                }, 1000);
               }
-            },1000);
+              else{
+                alert('验证码发送失败，请确认手机号重新发送');
+                self.code_text = '重新发送';
+              }
+            });
           } else {
             alert('手机号格式有误，请检查！');
           }
         }
       },
-      userService:function(){
+      userService: function () {
         alert('用户协议');
       },
       checkPhoneNumber: function () {
@@ -88,23 +98,22 @@
           return false;
         }
       },
-      login:function(){
+      login: function () {
         let phonenumber = this.phonenumber;
-        let code  = this.code;
+        let code = this.code;
         let data = qs.stringify({
-          phonenumber:phonenumber,
-          code:code
+          phonenumber: phonenumber,
+          code: code
         });
-        axios.post('/user/signinphonenumber',data).then(function(response){
-          if(response.data.success == 0){
+        axios.post('/user/signinphonenumber', data).then(function (response) {
+          if (response.data.success == 0) {
             router.go(-1);
-          }
-          else{
+          } else {
             alert('失败');
           }
         });
       },
-      goPasswordModel:function(){
+      goPasswordModel: function () {
         router.replace('/user/loginpassword');
       }
     }
@@ -175,7 +184,9 @@
     border-radius: 4px;
     outline: none;
   }
-  .user-service{
+
+  .user-service {
     color: #4b9dea;
   }
+
 </style>

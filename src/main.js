@@ -4,9 +4,14 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
+import VueLazyload from 'vue-lazyload'
 
 Vue.config.productionTip = false
-
+Vue.use(VueLazyload, {
+  error: '../static/images/error_icon.png',
+  loading: '../static/images/default_icon.png ',
+  try: 3 // default 1
+})
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

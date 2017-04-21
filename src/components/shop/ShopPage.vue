@@ -1,11 +1,12 @@
 <template>
   <div class="shoppage">
     <div class="shoppage-topbanner">
-      <span class="before" :style="{backgroundImage:'url('+restaurant_info.image_path+')'}"></span>
+      <!--<span class="before" :style="{backgroundImage:'url('+restaurant_info.image_path+')'}"></span>-->
+      <span class="before" v-lazy:background-image = "restaurant_info.image_path"></span>
       <span class="back-icon iconfont icon-arrow" @click.self="backIconClick"></span>
       <div class="shoppage-topbanner-content">
         <div class="shoppage-topbanner-info clearfix">
-          <img :src="restaurant_info.image_path" alt="" class="brand-img">
+          <img v-lazy="restaurant_info.image_path" alt="" class="brand-img">
           <div class="brand-text">
             <div class="shop-name">
               <span class="shop-name-icon" v-if="restaurant_info.is_brand"></span>{{restaurant_info.name}}

@@ -1,7 +1,7 @@
 <template>
   <div class="good-list-item" @click="routerTo">
     <div class="good-list-item-left">
-      <img :src="restaurant_info.image_path" alt="商家图片" class="goods-pic">
+      <img v-lazy="restaurant_info.image_path" alt="商家图片" class="goods-pic">
       <span class="new" v-if="restaurant_info.is_new"><i>新店</i></span>
     </div>
 
