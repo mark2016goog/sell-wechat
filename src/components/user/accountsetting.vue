@@ -4,13 +4,14 @@
     <div class="account-content">
       <div class="person-icon">
         <span class="title">头像</span>
-        <img src="/static/images/user-icon.jpg" alt="头像">
+        <img :src="person_icon" alt="头像">
       </div>
       <div class="username">
         <span class="title">用户名</span>
+        <span class="text">{{user_info.name}}</span>
       </div>
       <div class="setpassword">
-        <h2 >设置密码</h2>
+        <h2>设置密码</h2>
         <div class="password">
           <span class="title">登录密码</span>
           <span class="setting" @click="setPassword">未设置</span>
@@ -22,7 +23,7 @@
 <script>
   import router from '../../router'
   import topbar from '../header/header-top-bar'
-
+  import axios from 'axios';
   export default {
     name: 'accountsetting',
     data() {
@@ -30,7 +31,10 @@
         topbar: {
           title: '账户设置',
           is_arrow_show: true,
-        }
+        },
+        has_password: false,
+        user_info: {},
+        is_login: true,
       };
     },
     components: {
@@ -40,9 +44,40 @@
       topBack: function () {
         router.go(-1);
       },
-      setPassword:function(){
+      setPassword: function () {
         router.push('/user/setpassword');
       }
+    },
+    computed: {
+      person_icon() {
+        return this.user_info.avatar || "http://xiaodiwaimai.oss-cn-shenzhen.aliyuncs.com/default_person_icon.png"
+      },
+      phonenumber() {
+        if (this.user_info.phonenumber) {
+          return this.user_info.phonenumber.substr(0, 3) + '****' + this.user_info.phonenumber.substr(7, 4);
+        } else {
+          return '';
+        }
+      }
+    },
+    created: function () {
+      var self = this;
+      axios.get('/user/userinfo').then(function (response) {
+        if (response.data.success == 0) {
+          self.user_info = response.data.data;
+        } else if (response.data.success == -1) {
+          self.is_login = false;
+        }
+      });
+      axios.get('/user/haspassword').then(function (response) {
+        if (response.data.success == 0) {
+          self.has_password = true;
+        } else if (response.data.success == 1) {
+          self.has_password = false;
+        } else {
+          alert('你还未登录');
+        }
+      });
     }
   }
 
@@ -83,30 +118,38 @@
     top: 10px;
     right: 20px;
   }
-  .account-content .username{
+
+  .account-content .username {
     height: 40px;
     line-height: 40px;
     padding-left: 10px;
     background: #fff;
     border-bottom: 1px solid rgba(7, 17, 27, 0.1);
   }
-  .account-content .username .title{
+
+  .account-content .username .title {
     display: inline-block;
   }
-
-  .setpassword{
+  .account-content .username .text{
+    color:#666;
+    float:right;
+    margin-right:20px;
+  }
+  .setpassword {
     margin-top: 10px;
     background: #fff;
   }
-  .setpassword h2{
+
+  .setpassword h2 {
     height: 40px;
     line-height: 40px;
     color: #ccc;
     font-size: 14px;
-    padding-left:10px;
+    padding-left: 10px;
     border-top: 1px solid rgba(7, 17, 27, 0.1);
   }
-  .setpassword .password{
+
+  .setpassword .password {
     height: 40px;
     line-height: 40px;
     padding-left: 10px;
@@ -114,11 +157,14 @@
     border-top: 1px solid rgba(7, 17, 27, 0.1);
     border-bottom: 1px solid rgba(7, 17, 27, 0.1);
   }
-  .setpassword .password span{
+
+  .setpassword .password span {
     display: inline-block;
   }
-  .setpassword .password .setting{
+
+  .setpassword .password .setting {
     float: right;
     color: rgb(0, 150, 255);
   }
+
 </style>

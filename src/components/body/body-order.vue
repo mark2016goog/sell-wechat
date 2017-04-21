@@ -41,11 +41,7 @@
     },
     created: function () {
       var self = this;
-      axios.get('/orderlist/', {
-        params: {
-          user_phonenumber: '18996231874'
-        }
-      }).then(function (response) {
+      axios.get('/orderlist/').then(function (response) {
         if (response.data.success == 0) {
           if (response.data.data.length > 0) {
             self.order_list = response.data.data;

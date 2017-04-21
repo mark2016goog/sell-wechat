@@ -65,8 +65,6 @@
         },
         address: {
           _id:'',
-          user_phonenumber:'',
-          user_id:'',
           sex: '',
           name: '',
           phonenumber: '',

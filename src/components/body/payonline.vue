@@ -111,8 +111,7 @@
           restaurant_image_path:this.restaurant_info.image_path,
           shop_name: this.restaurant_info.name,
           status: 1,
-          good_list: JSON.stringify(this.order),
-          user_phonenumber: '18996231874'
+          good_list: JSON.stringify(this.order)
         });
         axios.post('/comfirmorder/', data).then(function (response) {
           if (response.data.success == 0) {

@@ -145,7 +145,6 @@
       this.time = this.caculateTime();
       this.order = JSON.parse(localStorage.getItem(restaurant_id));
       this.send_address = JSON.parse(sessionStorage.getItem('selectAddress')) || {};
-      console.log(this.send_address);
     }
   }
 

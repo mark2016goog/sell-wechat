@@ -27,7 +27,6 @@
       <div class="bottom-content" @click="addAddress">
         <span class="iconfont icon-jia"></span>新增地址
       </div>
-
     </div>
   </div>
 </template>
@@ -36,16 +35,7 @@
   import topbar from '../header/header-top-bar'
   import bus from '../../bus';
   import axios from 'axios';
-  import qs from 'qs'
-  // {
-  //   name: '王迪',
-  //   sex: '先生',
-  //   phonenumber: 18996231872,
-  //   address: '杭州市余杭区西溪北苑北区',
-  //   detail_address: '83栋一单元502',
-  //   door_number: '502',
-  //   label: '公司'
-  // }
+  import qs from 'qs';
   export default {
     name: 'sendaddress',
     data() {
@@ -77,8 +67,7 @@
           detail_address: this.sendaddress[index].detail_address,
           door_number: this.sendaddress[index].door_number,
           label: this.sendaddress[index].label,
-          _id: this.sendaddress[index]._id,
-          user_phonenumber: '18996231872'
+          _id: this.sendaddress[index]._id
         }
         sessionStorage.setItem('current_address', JSON.stringify(data));
         router.push('/addaddress');
@@ -96,7 +85,7 @@
     beforeRouteEnter(to,from,next){
         if(from.path.indexOf('comfirmorder') > -1){
           sessionStorage.setItem('sign',1);
-          next((vm)=>{
+          next(vm=>{
             vm.restaurant_id = from.path.split('/')[from.path.split('/').length-1]
           })
         }
@@ -117,14 +106,15 @@
       else{
         this.is_click = false;
       }
-      axios.get('/user/getaddress/', {
-        params: {
-          phonenumber: '18996231872'
-        }
-      }).then(function (response) {
+      axios.get('/user/getaddress/').then(function (response) {
         if (response.data.success == 0) {
           self.sendaddress = response.data.data;
-          self.empty = false;
+          if(self.sendaddress.length > 0){
+            self.empty = false;
+          }
+          else{
+            self.empty = true;
+          }
         } else if (response.data.success == -1) {
           self.empty = true;
         } else if (response.data.success == -2) {
