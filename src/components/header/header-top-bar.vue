@@ -14,9 +14,7 @@ export default {
     };
   },
   props:{
-    title:{
-      type:String,
-    },
+    title:String,
     is_arrow_show:{
       type:Boolean,
       default:false

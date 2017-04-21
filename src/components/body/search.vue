@@ -2,7 +2,7 @@
   <div class="search">
     <v-topbar :title="topbar.title" :is_arrow_show="topbar.is_arrow_show" @back="topBack"></v-topbar>
     <div class="search_content" style="padding-top:44px;">
-      <div class="search-box"><input type="text" placeholder="搜索商家、商品名称" v-focus v-model="search_text"><span class="iconfont icon-search"></span></div>
+      <div class="search-box"><input type="search" placeholder="搜索商家、商品名称" v-focus v-model="search_text"><span class="iconfont icon-search"></span></div>
       <div class="search-main">
         <div class="search-history" v-show="search_history.length > 0 && search_text.length == 0">
           <h3 class="title">历史搜索<span class="iconfont icon-shanchu" @click="deleteHistory"></span></h3>

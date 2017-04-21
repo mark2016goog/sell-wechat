@@ -64,7 +64,6 @@
   import Footer from '../footer/index-footer';
   import BScroll from 'better-scroll'
   import axios from 'axios'
-  import bus from '../../bus'
 
   export default {
     name: 'index',
@@ -108,7 +107,7 @@
         });
       },
       topbannerpage:function(e){
-        bus.$emit('topSearch',e.target.innerText);
+        this.$store.commit('setTopbanner',e.target.innerText);
         router.push('/topbannerpage');
       }
     },

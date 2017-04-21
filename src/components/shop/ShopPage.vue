@@ -90,7 +90,7 @@
         this.show_detail = false;
       },
       backIconClick: function () {
-        router.push('/index');
+        router.go(-1);
       }
     },
     computed: {

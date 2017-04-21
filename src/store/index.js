@@ -10,7 +10,8 @@ const store =  new Vuex.Store({
     params:{
       has_data:true,
     },
-    restaurant_id:''
+    restaurant_id:'',
+    topbanner:''
   },
   mutations: {
     setRestaurant(state,payload){
@@ -24,6 +25,9 @@ const store =  new Vuex.Store({
     },
     setId(state,payload){
       state.restaurant_id = payload;
+    },
+    setTopbanner(state,payload){
+      state.topbanner = payload;
     }
   },
   getters: {
@@ -33,6 +37,9 @@ const store =  new Vuex.Store({
           return state.restaurant[i];
         }
       }
+    },
+    getTopbanner(state){
+      return state.topbanner;
     }
   },
   actions: {

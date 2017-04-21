@@ -7,7 +7,7 @@
         <div class="order-now" @click="order">立即订餐</div>
       </div>
       <div v-else>
-        <order-list-item v-for="item in order_list" :order="item"></order-list-item>
+        <order-list-item v-for="(item,index) in order_list" :order="item" :key="index"></order-list-item>
       </div>
     </div>
     <div class="loginout-content" v-else>
