@@ -15,7 +15,7 @@
           <div class="nav-bar">
             <ul class="nav-bar-list" @click="topbannerpage">
               <li class="nav-bar-list-item" v-lazy:background-image="'/static/images/meishi.jpeg'">
-                 美食
+                美食
               </li>
               <li class="nav-bar-list-item" v-lazy:background-image="'/static/images/chaoshi.jpeg'">
                 超市
@@ -27,13 +27,13 @@
                 甜点饮品
               </li>
               <li class="nav-bar-list-item" v-lazy:background-image="'/static/images/hanbao.jpeg'">
-              汉堡
+                汉堡
               </li>
               <li class="nav-bar-list-item" v-lazy:background-image="'/static/images/xindian.jpeg'">
                 新店
               </li>
               <li class="nav-bar-list-item" v-lazy:background-image="'/static/images/zhunshi.jpeg'">
-               准时达
+                准时达
               </li>
               <li class="nav-bar-list-item" v-lazy:background-image="'/static/images/malatang.jpeg'">
                 麻辣烫
@@ -50,7 +50,7 @@
           </div>
         </div>
         <div class="more">
-            {{more_text}}
+          {{more_text}}
         </div>
       </div>
     </div>
@@ -73,8 +73,8 @@
         goods_data: [],
         weather: {},
         offset: 1,
-        scroll:'',
-        has_data:true,
+        scroll: '',
+        has_data: true,
       };
     },
     components: {
@@ -92,73 +92,98 @@
         var self = this;
         axios.get('/restaurant/', {
           params: {
-            longitude: 120.207372,
-            latitude: 30.26409,
-            offset: self.offset*10,
+            longitude: sessionStorage.getItem('lng'),
+            latitude: sessionStorage.getItem('lat'),
+            offset: self.offset * 10,
             limit: 10,
           }
         }).then(function (response) {
           self.goods_data = self.goods_data.concat(response.data);
-          self.$store.commit('setRestaurant',response.data);
+          self.$store.commit('setRestaurant', response.data);
           self.offset += 1;
-          if(response.data.length < 10){
+          if (response.data.length < 10) {
             self.has_data = false;
           }
         });
       },
-      topbannerpage:function(e){
-        this.$store.commit('setTopbanner',e.target.innerText);
+      topbannerpage: function (e) {
+        this.$store.commit('setTopbanner', e.target.innerText);
         router.push('/topbannerpage');
       }
     },
-    computed:{
-      more_text(){
-        return this.has_data? '加载中...':'更多商家正在接入中';
+    computed: {
+      more_text() {
+        return this.has_data ? '加载中...' : '更多商家正在接入中';
       }
     },
-    updated:function(){
-      if(this.scroll){
+    updated: function () {
+      if (this.scroll) {
         this.scroll.refresh();
       }
     },
     created: function () {
       var self = this;
-      axios.get('/weather/',{params:{
-         longitude: 120.207372,
-         latitude: 30.26409,
-      }}).then(function(response){
-        self.weather = response.data;
-      });
-      axios.get('/restaurant/', {
-        params: {
-          longitude: 120.207372,
-          latitude: 30.26409,
-          offset: 0,
-          limit: 10,
-        }
-      }).then(function (response) {
-        self.goods_data = response.data;
-        self.$store.commit('setRestaurant',response.data);
-        self.$nextTick(function () {
-          if (!self.scroll) {
-            self.scroll = new BScroll(document.querySelector('.index-content'), {
-              click: true,
-              probeType: 3
+      let geoc = new BMap.Geocoder();
+      let geolocation = new BMap.Geolocation();
+      geolocation.getCurrentPosition(function (r) {
+        if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+          geoc.getLocation(r.point, function (rs) {
+            var addComp = rs.addressComponents;
+            self.address = addComp.district+addComp.street+addComp.streetNumber;
+            sessionStorage.setItem('lng',r.point.lng);
+            sessionStorage.setItem('lat',r.point.lat);
+            axios.get('/weather/', {
+              params: {
+                longitude: r.point.lng,
+                latitude: r.point.lat,
+              }
+            }).then(function (response) {
+              self.weather = response.data;
             });
-          } else {
-            self.scroll.refresh();
-          }
-          self.scroll.on('touchend', function () {
-            if (this.y < (this.maxScrollY)) {
-              if(self.has_data){
-                self.loadData();
-              } 
-            }
-          })
-        });
+            axios.get('/restaurant/', {
+              params: {
+                longitude: r.point.lng,
+                latitude: r.point.lat,
+                offset: 0,
+                limit: 10,
+              }
+            }).then(function (response) {
+              self.goods_data = response.data;
+              self.$store.commit('setRestaurant', response.data);
+              self.$nextTick(function () {
+                if (!self.scroll) {
+                  self.scroll = new BScroll(document.querySelector('.index-content'), {
+                    click: true,
+                    probeType: 3
+                  });
+                } else {
+                  self.scroll.refresh();
+                }
+                self.scroll.on('touchend', function () {
+                  if (this.y < (this.maxScrollY)) {
+                    if (self.has_data) {
+                      self.loadData();
+                    }
+                  }
+                })
+              });
+            });
+          });
+        } else {
+          self.address = '定位失败';
+        }
+      }, {
+        enableHighAccuracy: true
       });
+
+
+    },
+    mounted: function () {
+
+
     }
   }
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -261,10 +286,10 @@
     height: 80px;
     overflow: hidden;
     text-align: center;
-    background-position:center 10px;
+    background-position: center 10px;
     background-repeat: no-repeat;
-    background-size:40px 40px;
-    padding-top:60px;
+    background-size: 40px 40px;
+    padding-top: 60px;
   }
 
   .content {
@@ -294,4 +319,5 @@
     padding-left: 20px;
     border-left: 4px solid #fdad3a;
   }
+
 </style>

@@ -63,8 +63,8 @@
         var self = this;
         axios.get('/restaurant/' + this.keyword, {
           params: {
-            longitude: 120.207372,
-            latitude: 30.26409,
+            longitude: sessionStorage.getItem('lng'),
+            latitude: sessionStorage.getItem('lat'),
             offset: self.offset * 10,
             limit: 10,
           }
@@ -116,8 +116,8 @@
       }
       axios.get('/restaurant/' + this.keyword, {
         params: {
-          longitude: 120.207372,
-          latitude: 30.26409,
+          longitude: sessionStorage.getItem('lng'),
+          latitude: sessionStorage.getItem('lat'),
           offset: 0,
           limit: 10,
         }
