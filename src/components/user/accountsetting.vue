@@ -17,6 +17,10 @@
           <span class="setting" @click="setPassword">未设置</span>
         </div>
       </div>
+      <div class="loginout-btn-box">
+        <div class="loginout-btn" @click="loginout">退出登录</div>
+      </div>
+      <v-alertbox :content="alertbox.content" :btn="alertbox.btn" v-if="alertbox.show" @comfirm="comfirmLogout" @cancel="cancelLogout"></v-alertbox>
     </div>
   </div>
 </template>
@@ -24,6 +28,7 @@
   import router from '../../router'
   import topbar from '../header/header-top-bar'
   import axios from 'axios';
+  import alertbox from '../component/alertbox'
   export default {
     name: 'accountsetting',
     data() {
@@ -35,10 +40,16 @@
         has_password: false,
         user_info: {},
         is_login: true,
+        alertbox:{
+          show:false,
+          content:'',
+          btn:''
+        }
       };
     },
     components: {
-      'v-topbar': topbar
+      'v-topbar': topbar,
+      'v-alertbox':alertbox
     },
     methods: {
       topBack: function () {
@@ -46,6 +57,27 @@
       },
       setPassword: function () {
         router.push('/user/setpassword');
+      },
+      loginout(){
+        var self = this;
+        self.alertbox.show = true;
+        self.alertbox.content = '确定要退出吗？';
+        self.alertbox.btn = ['取消','确定'];
+      },
+      comfirmLogout(){
+        let self = this;
+        axios.post('/user/logout').then(function(response){
+          if(response.data.success == 0){
+            router.push('/personcenter');
+          }
+          else{
+            router.push('/personcenter');
+          }
+        });
+      },
+      cancelLogout(){
+        this.alertbox.show = false;
+        this.alertbox.btn = [];
       }
     },
     computed: {
@@ -130,11 +162,13 @@
   .account-content .username .title {
     display: inline-block;
   }
-  .account-content .username .text{
-    color:#666;
-    float:right;
-    margin-right:20px;
+
+  .account-content .username .text {
+    color: #666;
+    float: right;
+    margin-right: 20px;
   }
+
   .setpassword {
     margin-top: 10px;
     background: #fff;
@@ -165,6 +199,25 @@
   .setpassword .password .setting {
     float: right;
     color: rgb(0, 150, 255);
+  }
+  .loginout-btn-box{
+    width: 100%;
+    padding:0 10px;
+    box-sizing: border-box;
+    position: fixed;
+    bottom:20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .loginout-btn {
+    text-align: center;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    background: #ff9900;
+    border-radius: 4px;
+    color: #fff;
+    box-sizing: border-box;
   }
 
 </style>

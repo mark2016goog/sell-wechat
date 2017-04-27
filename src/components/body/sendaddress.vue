@@ -47,8 +47,8 @@
         sendaddress: [],
         is_login: true,
         empty: true,
-        is_click:false,
-        restaurant_id:''
+        is_click: false,
+        restaurant_id: ''
       }
     },
     methods: {
@@ -73,43 +73,41 @@
         router.push('/addaddress');
       },
       select: function (item) {
-        if(this.is_click){
-          router.push('/comfirmorder/'+this.restaurant_id);
-          sessionStorage.setItem('selectAddress',JSON.stringify(item));
+        if (this.is_click) {
+          router.push('/comfirmorder/' + this.restaurant_id);
+          sessionStorage.setItem('selectAddress', JSON.stringify(item));
         }
       }
     },
-    beforeRouteEnter(to,from,next){
-        if(from.path.indexOf('comfirmorder') > -1){
-          sessionStorage.setItem('sign',1);
-          next(vm=>{
-            vm.restaurant_id = from.path.split('/')[from.path.split('/').length-1]
-          })
-        }
-        else if(from.path.indexOf('personcenter') > -1){
-          sessionStorage.setItem('sign',2);
-          next();
-        }
+    beforeRouteEnter(to, from, next) {
+      if (from.path.indexOf('comfirmorder') > -1) {
+        sessionStorage.setItem('sign', 1);
+        next(vm => {
+          vm.restaurant_id = from.path.split('/')[from.path.split('/').length - 1]
+        })
+      } else if (from.path.indexOf('personcenter') > -1) {
+        sessionStorage.setItem('sign', 2);
         next();
+      } else {
+        next();
+      }
     },
     components: {
       'v-topbar': topbar
     },
     created: function () {
       var self = this;
-      if(sessionStorage.getItem('sign') == 1){
+      if (sessionStorage.getItem('sign') == 1) {
         this.is_click = true;
-      }
-      else{
+      } else {
         this.is_click = false;
       }
       axios.get('/user/getaddress/').then(function (response) {
         if (response.data.success == 0) {
           self.sendaddress = response.data.data;
-          if(self.sendaddress.length > 0){
+          if (self.sendaddress.length > 0) {
             self.empty = false;
-          }
-          else{
+          } else {
             self.empty = true;
           }
         } else if (response.data.success == -1) {
